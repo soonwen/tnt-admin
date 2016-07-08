@@ -9,7 +9,6 @@
     "start": "node ./build/server.js"
   },
   "dependencies": {
-    "webpack": "^1.9.10",
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
@@ -28,6 +27,7 @@
     "node": "4.4.7"
   },
   "devDependencies":{
+    "webpack": "^1.9.10",
     "webpack-dev-server": "^1.8.2",
     "react-hot-loader": "^1.2.7",
     "babel": "^5.1.11",
