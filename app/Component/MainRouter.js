@@ -8,7 +8,7 @@ import {Router, Route, IndexRoute, hashHistory} from 'react-router'
 import CreateEntryTable from './CreateEntryTable'
 import SearchResultTable from './Search/SearchResultTable'
 import Welcome from './Welcome'
-import Main from './Main'
+import Main from './Main/Main'
 
 
 export default class MainRouter extends React.Component {

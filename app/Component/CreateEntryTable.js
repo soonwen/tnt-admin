@@ -4,6 +4,8 @@
 'use strict';
 
 import React from 'react';
+import TypeChooser from './Header/TypeChooser'
+
 
 export default class CreateEntryTable extends React.Component {
 	constructor() {
@@ -12,7 +14,10 @@ export default class CreateEntryTable extends React.Component {
 
 	render(){
 		return (
-			<div>Create Entry Table</div>
+			<div>
+				<TypeChooser/>
+				<div>Create Entry Table</div>
+			</div>
 		);
 	}
 }
