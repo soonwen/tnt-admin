@@ -7,6 +7,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+
 import Clean from 'clean-webpack-plugin';
 
 // base app dir
@@ -15,12 +17,12 @@ let output = path.join(root_dir, 'build');
 let cleanDirectories = ['build'];
 
 
-module.exports = {
+module.exports = [{
 	context: path.join(root_dir, 'app'),
 	entry: './app',
 	output:{
 		path: output,
-		filename: 'bundle.js'
+		filename: 'app.js'
 	},
 	resolve: {
 		extensions: ['', '.js', '.jsx']
@@ -28,6 +30,7 @@ module.exports = {
 	module: {
 		loaders: [
 			{ test: /\.js?$/, loaders: ['react-hot', 'babel'], exclude: [/node_modules/, /__tests__/] },
+			{ test: /\.sass$/, loader: ExtractTextPlugin.extract('style', 'css!sass?indentedSyntax')},
 			{ test: /\.json$/, loader: 'json'}
 		]
 	},
@@ -40,6 +43,26 @@ module.exports = {
 			filename: 'index.html',
 			template: path.join(root_dir,'template/index.html')
 		}),
-		new Clean(cleanDirectories, root_dir)
+		new Clean(cleanDirectories, root_dir),
+		new ExtractTextPlugin("app.css")
 	]
-};
+},
+	{
+		context: path.join(root_dir, 'server'),
+		entry: './server',
+		output:{
+			path: output,
+			filename: 'server.js'
+		},
+		devtool:"#inline-source-map",
+		resolve: {
+			extensions: ['', '.js']
+		},
+		target: 'node',
+		module: {
+			loaders: [
+				{ test: /\.js$/, loader: 'babel', exclude: [/node_modules/, /__tests__/] },
+				{ test: /\.json$/, loader: 'json'}
+			]
+		},
+	}];

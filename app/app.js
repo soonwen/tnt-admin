@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Main from './Main/Main';
+import MainRouter from './Component/MainRouter';
 
-ReactDOM.render(<Main />, document.getElementById('content'));
+ReactDOM.render(<MainRouter />, document.getElementById('content'));
