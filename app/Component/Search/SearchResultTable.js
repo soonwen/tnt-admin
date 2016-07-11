@@ -4,20 +4,20 @@
 'use strict';
 
 import React from 'react';
-import TypeChooser from '../Header/TypeChooser'
+import SearchTypeChooser from '../../Container/SearchTypeChooser'
 
 if (process.env.BROWSER) {
 	require('./SearchResultTable.sass');
 }
-export default class SearchResultTable extends React.Component {
-	constructor() {
-		super();
+class SearchResultTable extends React.Component {
+	constructor(props) {
+		super(props);
 	}
 
 	render(){
 		return (
 		<div>
-			<TypeChooser/>
+			<SearchTypeChooser onSearchClicked={this.props.onSearchClicked}/>
 			<table className="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
 						<thead>
 						<tr>
@@ -48,3 +48,10 @@ export default class SearchResultTable extends React.Component {
 		);
 	}
 }
+
+SearchResultTable.propTypes = {
+	onSearchClicked: React.PropTypes.func.isRequired,
+	result: React.PropTypes.string
+};
+
+export default SearchResultTable
