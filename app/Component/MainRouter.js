@@ -11,11 +11,11 @@ import SearchResultRenderer from '../Container/SearchResultRenderer'
 
 import Welcome from './Welcome'
 import Main from './Main/Main'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import mainReducer from '../Reducer/index'
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux'
-let store = createStore(mainReducer, applyMiddleware(thunk), window.devToolsExtension && window.devToolsExtension());
+let store = createStore(mainReducer, compose(applyMiddleware(thunk), window.devToolsExtension ? window.devToolsExtension() : f => f));
 
 export default class MainRouter extends React.Component {
 	constructor() {

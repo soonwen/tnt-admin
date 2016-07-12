@@ -22,6 +22,7 @@ function translateAction(actionType){
 		case actionTypes.SEARCH_MUSCLE_GROUP:
 			return "肌肉组";
 	}
+	return "选择搜索类型";
 }
 
 class TypeChooser extends React.Component{
@@ -33,14 +34,14 @@ class TypeChooser extends React.Component{
 	render(){
 		return(
 			<div className="search-type-chooser">
-				<DropdownButton bsStyle="default" id="dropdown-basic" title={this.props.selection} onSelect={this.props.onItemSelected}>
+				<DropdownButton bsStyle="default" id="dropdown-basic" title={translateAction(this.props.selection)} onSelect={this.props.onItemSelected}>
 					<MenuItem eventKey={actionTypes.SEARCH_EXERCISE}>{translateAction(actionTypes.SEARCH_EXERCISE)}</MenuItem>
 					<MenuItem eventKey={actionTypes.SEARCH_EQUIPMENT}>{translateAction(actionTypes.SEARCH_EQUIPMENT)}</MenuItem>
 					<MenuItem eventKey={actionTypes.SEARCH_MUSCLE}>{translateAction(actionTypes.SEARCH_MUSCLE)}</MenuItem>
 					<MenuItem eventKey={actionTypes.SEARCH_MUSCLE_GROUP}>{translateAction(actionTypes.SEARCH_MUSCLE_GROUP)}</MenuItem>
 				</DropdownButton>
 				<SearchField/>
-				<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onClick={this.props.onSearchClicked("muscleGroup", this.props.selection)}>
+				<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onClick={()=>this.props.onSearchClicked(document.getElementById("criteria-input").value, this.props.selection)}>
 					搜索
 				</button>
 			</div>

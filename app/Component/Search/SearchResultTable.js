@@ -5,6 +5,10 @@
 
 import React from 'react';
 import SearchTypeChooser from '../../Container/SearchTypeChooser'
+import SearchResultHeader from './SearchResultHeader'
+import SearchResultItem from './SearchResultItem'
+
+
 
 if (process.env.BROWSER) {
 	require('./SearchResultTable.sass');
@@ -17,31 +21,14 @@ class SearchResultTable extends React.Component {
 	render(){
 		return (
 		<div>
-			<SearchTypeChooser onSearchClicked={this.props.onSearchClicked}/>
+			<SearchTypeChooser />
 			<table className="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-						<thead>
-						<tr>
-							<th className="mdl-data-table__cell--non-numeric">Material</th>
-							<th>Quantity</th>
-							<th>Unit price</th>
-						</tr>
-						</thead>
+						<SearchResultHeader headers={this.props.results.headers}/>
 						<tbody>
-						<tr>
-							<td className="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-							<td>25</td>
-							<td>$2.90</td>
-						</tr>
-						<tr>
-							<td className="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-							<td>50</td>
-							<td>$1.25</td>
-						</tr>
-						<tr>
-							<td className="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
-							<td>10</td>
-							<td>$2.35</td>
-						</tr>
+							{this.props.results.data.map((result) =>{
+								return <SearchResultItem headers={this.props.results.headers} result={result}/>
+								})
+							}
 						</tbody>
 					</table>
 			</div>
@@ -50,8 +37,7 @@ class SearchResultTable extends React.Component {
 }
 
 SearchResultTable.propTypes = {
-	onSearchClicked: React.PropTypes.func.isRequired,
-	result: React.PropTypes.string
+	results: React.PropTypes.object
 };
 
 export default SearchResultTable
