@@ -46,6 +46,15 @@ function renderMuscleGroupResult(result){
 	return createSimpleAction(actionTypes.MUSCLE_GROUP_SEARCH_RESULT_RECEIVED, result)
 }
 
+function renderAllEquipmentResult(result){
+	return createSimpleAction(actionTypes.GET_ALL_EQUIPMENT_RECEIVED, result)
+
+}
+
+function renderAllMuscleResult(result){
+	return createSimpleAction(actionTypes.GET_ALL_MUSCLES_RECEIVED, result)
+
+}
 function fetchResult(request, type){
 
 
@@ -128,6 +137,43 @@ export function fetchExerciseResult(keyword){
 						console.log('data retrieved');
 						console.log(result.data);
 						dispatch(renderExerciseResult(result));
+					}else{
+						console.log('failed to retrieve data')
+					}
+				})
+	}
+}
+
+export function fetchAllMuscle(){
+	let request = {operation: "query", data:{name:{"contains":""}}};
+	return dispatch =>{
+		return fetchResult(request, 'muscle')
+				.then(response => response.json())
+				.catch(err => console.log(err))
+				.then(result => {
+					if(result.success){
+						console.log('data retrieved');
+						console.log(result.data);
+						dispatch(renderAllMuscleResult(result));
+					}else{
+						console.log('failed to retrieve data')
+					}
+				})
+	}
+}
+
+export function fetchAllEquipment(){
+	let request = {operation: "query", data:{name:{"contains":""}}};
+	return dispatch =>{
+		//dispatch(requestMuscleGroupResult());
+		return fetchResult(request, 'equipment')
+				.then(response => response.json())
+				.catch(err => console.log(err))
+				.then(result => {
+					if(result.success){
+						console.log('data retrieved');
+						console.log(result.data);
+						dispatch(renderAllEquipmentResult(result));
 					}else{
 						console.log('failed to retrieve data')
 					}

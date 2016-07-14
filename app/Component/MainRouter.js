@@ -5,7 +5,7 @@
 
 import React from 'react';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router'
-import CreateEntryTable from './CreateEntryTable'
+import CreateEntryTable from './Create/CreateEntryTable'
 import SearchResultTable from './Search/SearchResultTable'
 import SearchResultRenderer from '../Container/SearchResultRenderer'
 

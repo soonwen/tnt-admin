@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import SearchTypeChooser from '../../Container/SearchTypeChooser'
+import PerformSearch from '../../Container/PerformSearch'
 import SearchResultHeader from './SearchResultHeader'
 import SearchResultItem from './SearchResultItem'
 
@@ -21,9 +21,9 @@ class SearchResultTable extends React.Component {
 	render(){
 		return (
 		<div>
-			<SearchTypeChooser />
+			<PerformSearch />
 			<table className="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-						<SearchResultHeader headers={this.props.results.headers}/>
+						<SearchResultHeader headers={this.props.results.headerTexts}/>
 						<tbody>
 							{this.props.results.data.map((result) =>{
 								return <SearchResultItem headers={this.props.results.headers} result={result}/>

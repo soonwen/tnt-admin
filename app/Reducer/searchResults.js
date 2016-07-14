@@ -8,7 +8,7 @@ function extractResult(action){
 	return action.payload.data
 }
 export default function renderResult(state = {headers:[], data:[]}, action){
-	let result = {headers:[], data:[]};
+	let result = {headers:[], data:[], headerTexts:[]};
 	let type = action.type;
 	switch (type){
 		case actionTypes.MUSCLE_GROUP_SEARCH_RESULT_RECEIVED:
@@ -16,6 +16,7 @@ export default function renderResult(state = {headers:[], data:[]}, action){
 			if(typeof action.payload != 'undefined'){
 				let resultFromBackend=extractResult(action);
 				result.headers = ['_id', 'name', 'imageURLs', 'muscles'];
+				result.headerTexts = ['id', '名字','图片资源', '肌肉'];
 				result.data = resultFromBackend.map((muscleGroupResult)=>{
 					muscleGroupResult.muscles = muscleGroupResult['muscles'].map((muscle)=> {
 						return muscle['name']+' '
@@ -29,7 +30,8 @@ export default function renderResult(state = {headers:[], data:[]}, action){
 			console.log("result received: ", action);
 			if(typeof action.payload != 'undefined'){
 				let resultFromBackend=extractResult(action);
-				result.headers = ['_id', 'name','equipments', 'metrics', 'resourceURLs', 'minorMuscles', 'majorMuscles', 'tag', 'advancedContent', 'basicContent'];
+				result.headers = ['_id', 'name','equipments', 'metrics', 'resourceURLs', 'majorMuscles', 'minorMuscles', 'tag', 'advancedContent', 'basicContent'];
+				result.headerTexts = ['id', '名字','器械', '数据类型', '图片资源', '主要肌肉', '次要肌肉', '标签', '高级内容', '低级内容'];
 				result.data = resultFromBackend.map((exerciseResult)=>{
 					exerciseResult.metrics = exerciseResult['metrics'].map((metrics)=> {
 						return metrics['name']+' '
@@ -37,7 +39,7 @@ export default function renderResult(state = {headers:[], data:[]}, action){
 					exerciseResult.minorMuscles = exerciseResult['minorMuscles'].map((minorMuscles)=> {
 						return minorMuscles['name']+' '
 					});
-					exerciseResult.majorMuscles = exerciseResult['minorMuscles'].map((majorMuscles)=> {
+					exerciseResult.majorMuscles = exerciseResult['majorMuscles'].map((majorMuscles)=> {
 						return majorMuscles['name']+' '
 					});
 					exerciseResult.equipments = exerciseResult['equipments'].map((equipments)=> {
@@ -52,6 +54,7 @@ export default function renderResult(state = {headers:[], data:[]}, action){
 			console.log("result received: ", action);
 			if(typeof action.payload != 'undefined'){
 				result.headers = ['_id', 'name', 'imageURLs'];
+				result.headerTexts = ['id', '名字','图片资源'];
 				result.data = extractResult(action);
 				return result
 			}
@@ -61,6 +64,7 @@ export default function renderResult(state = {headers:[], data:[]}, action){
 			if(typeof action.payload != 'undefined'){
 				let resultFromBackend=extractResult(action);
 				result.headers = ['_id', 'name', 'detail', 'imageURLs', 'type'];
+				result.headerTexts = ['id', '名字','详细','图片资源', '标签'];
 				result.data = resultFromBackend.map((equipmentResult)=>{
 					equipmentResult.type = equipmentResult.type.name;
 					return equipmentResult;
