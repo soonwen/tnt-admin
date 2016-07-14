@@ -28,7 +28,7 @@ class CreateEntryForm extends React.Component {
 								return(
 										<FormGroup controlId={entryType.header}>
 											<ControlLabel>{entryType.headerText}</ControlLabel>
-											<FormControl type="select" multiple>
+											<FormControl componentClass="select" multiple>
 												{entryType.data.map((data) =>{
 													return(<option value={data}>{data}</option>)
 												})}
