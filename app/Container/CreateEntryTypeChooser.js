@@ -1,10 +1,11 @@
 /**
  * Created by robertzzy on 13/07/16.
  */
-import {fetchAllEquipment, fetchAllMuscle, selectSearchType} from '../Actions/actions'
+import {fetchAllEquipment, fetchAllMuscle, selectModel} from '../Actions/actions'
 import { connect } from 'react-redux'
 import * as actionTypes from '../Actions/actionTypes'
-import DataTypeChooser from '../Component/Header/DataTypeChooser'
+import DataTypeChooser from '../Component/Header/ModelTypeChooser'
+import * as modelTypes from '../model'
 
 
 const mapStateToProps = (state) => {
@@ -17,15 +18,15 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onItemSelected: (eventKey, event) => {
 			switch (eventKey){
-				case actionTypes.SEARCH_MUSCLE_GROUP:
+				case modelTypes.MUSCLE_GROUP:
 					dispatch(fetchAllMuscle());
 					break;
-				case actionTypes.SEARCH_EXERCISE:
+				case modelTypes.EXERCISE:
 					dispatch(fetchAllMuscle());
 					dispatch(fetchAllEquipment());
 					break;
 			}
-			dispatch(selectSearchType(eventKey))
+			dispatch(selectModel(eventKey))
 		}
 	}
 };

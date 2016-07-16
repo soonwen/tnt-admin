@@ -4,26 +4,30 @@
 import { connect } from 'react-redux'
 import * as actionTypes from '../Actions/actionTypes'
 import CreateEntryForm from '../Component/Create/CreateEntryForm'
-import {fetchAllEquipment, fetchAllMuscle} from '../Actions/actions'
+import {fetchAllEquipment, fetchAllMuscle, addCreateEntryField, createMuscleGroup, acknowledgeCreateEntryResult} from '../Actions/actions'
+import * as modelTypes from '../model'
+
 
 
 const mapStateToProps = (state) => {
 	let entryStructure = [];
 	switch (state.renderTypeChoice){
-		case actionTypes.SEARCH_MUSCLE_GROUP:
+		case modelTypes.MUSCLE_GROUP:
 			entryStructure.push({header:'name', headerText:'名字', type:'text'});
 			entryStructure.push({header:'muscles', headerText:'肌肉', type:'multi-select', data:state.allMuscles});
 			break;
-		case actionTypes.SEARCH_EQUIPMENT:
+		case modelTypes.EQUIPMENT:
 			break;
-		case actionTypes.SEARCH_MUSCLE:
+		case modelTypes.MUSCLE:
 			break;
-		case actionTypes.SEARCH_EXERCISE:
+		case modelTypes.EXERCISE:
 			break;
 	}
 	return {
 		type: state.renderTypeChoice,
-		entryTypes: entryStructure
+		entryTypes: entryStructure,
+		createRequestSent: state.createEntryRequestSent,
+		createResult: state.createEntryResult
 	}
 
 };
@@ -32,15 +36,32 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		fetchAll: (type) => {
 			switch (type){
-				case actionTypes.SEARCH_MUSCLE_GROUP:
+				case modelTypes.MUSCLE_GROUP:
 					dispatch(fetchAllMuscle());
 					break;
-				case actionTypes.SEARCH_EXERCISE:
+				case modelTypes.EXERCISE:
 					dispatch(fetchAllMuscle());
 					dispatch(fetchAllEquipment());
 					break;
 
 			}
+		},
+		addInputEntry: (entryType) =>{
+			dispatch(addCreateEntryField(entryType))
+		},
+		createEntry: (payload, type) =>{
+			switch (type){
+				case modelTypes.MUSCLE_GROUP:
+					dispatch(createMuscleGroup(payload));
+					break;
+				case modelTypes.EXERCISE:
+					break;
+
+			}
+		},
+		acknowledgeResult: () =>{
+			dispatch(acknowledgeCreateEntryResult());
+
 		}
 	}
 };

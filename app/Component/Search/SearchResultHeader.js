@@ -18,7 +18,7 @@ class SearchResultHeader extends React.Component {
 			<thead>
 			<tr>
 				{this.props.headers.map((header)=>{
-					return <th>{header}</th>
+					return <th key={header}>{header}</th>
 
 				})}
 			</tr>

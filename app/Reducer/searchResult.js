@@ -7,7 +7,7 @@ import * as actionTypes from '../Actions/actionTypes'
 function extractResult(action){
 	return action.payload.data
 }
-export default function renderResult(state = {headers:[], data:[]}, action){
+export default function renderResult(state = {headers:[], data:[], headerTexts:[]}, action){
 	let result = {headers:[], data:[], headerTexts:[]};
 	let type = action.type;
 	switch (type){

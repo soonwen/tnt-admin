@@ -18,7 +18,7 @@ class SearchResultItem extends React.Component {
 				<tr>
 					{this.props.headers.map((header) =>
 					{
-						return <td>{this.props.result[header]}</td>
+						return <td key={header}>{this.props.result[header]}</td>
 					})}
 				</tr>
 		);

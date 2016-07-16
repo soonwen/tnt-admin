@@ -12,20 +12,6 @@ if (process.env.BROWSER) {
 	require('./SearchBar.sass');
 }
 
-function translateAction(actionType){
-	switch (actionType){
-		case actionTypes.SEARCH_EXERCISE:
-			return "动作";
-		case actionTypes.SEARCH_EQUIPMENT:
-			return "器械";
-		case actionTypes.SEARCH_MUSCLE:
-			return "肌肉";
-		case actionTypes.SEARCH_MUSCLE_GROUP:
-			return "肌肉组";
-	}
-	return "选择搜索类型";
-}
-
 class TypeChooser extends React.Component{
 
 	constructor(props) {

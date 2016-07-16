@@ -1,10 +1,10 @@
 /**
  * Created by robertzzy on 13/07/16.
  */
-import {selectSearchType, fetchMuscleGroupResult, fetchEquipmentResult, fetchExerciseResult, fetchMuscleResult} from '../Actions/actions'
+import {selectModel, fetchMuscleGroupResult, fetchEquipmentResult, fetchExerciseResult, fetchMuscleResult} from '../Actions/actions'
 import { connect } from 'react-redux'
-import * as actionTypes from '../Actions/actionTypes'
 import TypeChooser from '../Component/Search/SearchBar'
+import * as modelTypes from '../model'
 
 
 const mapStateToProps = (state) => {
@@ -18,16 +18,16 @@ const mapDispatchToProps = (dispatch) => {
 		onSearchClicked: (keyword, type) => {
 			console.log('search for '+ type);
 			switch (type){
-				case actionTypes.SEARCH_MUSCLE_GROUP:
+				case modelTypes.MUSCLE_GROUP:
 					dispatch(fetchMuscleGroupResult(keyword));
 					break;
-				case actionTypes.SEARCH_EQUIPMENT:
+				case modelTypes.EQUIPMENT:
 					dispatch(fetchEquipmentResult(keyword));
 					break;
-				case actionTypes.SEARCH_MUSCLE:
+				case modelTypes.MUSCLE:
 					dispatch(fetchMuscleResult(keyword));
 					break;
-				case actionTypes.SEARCH_EXERCISE:
+				case modelTypes.EXERCISE:
 					dispatch(fetchExerciseResult(keyword));
 					break;
 

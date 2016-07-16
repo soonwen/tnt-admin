@@ -2,10 +2,10 @@
  * Created by robertzzy on 09/07/16.
  */
 
-import {selectSearchType} from '../Actions/actions'
+import {selectModel} from '../Actions/actions'
 import { connect } from 'react-redux'
 import * as actionTypes from '../Actions/actionTypes'
-import DataTypeChooser from '../Component/Header/DataTypeChooser'
+import DataTypeChooser from '../Component/Header/ModelTypeChooser'
 
 
 const mapStateToProps = (state) => {
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onItemSelected: (eventKey, event) => {
-			dispatch(selectSearchType(eventKey))
+			dispatch(selectModel(eventKey))
 		}
 	}
 };

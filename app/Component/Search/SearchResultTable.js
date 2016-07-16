@@ -22,11 +22,11 @@ class SearchResultTable extends React.Component {
 		return (
 		<div>
 			<PerformSearch />
-			<table className="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+			<table className="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
 						<SearchResultHeader headers={this.props.results.headerTexts}/>
 						<tbody>
 							{this.props.results.data.map((result) =>{
-								return <SearchResultItem headers={this.props.results.headers} result={result}/>
+								return <SearchResultItem key={result['_id']} headers={this.props.results.headers} result={result}/>
 								})
 							}
 						</tbody>
