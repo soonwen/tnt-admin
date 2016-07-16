@@ -30,8 +30,8 @@ export default function renderResult(state = {headers:[], data:[], headerTexts:[
 			console.log("result received: ", action);
 			if(typeof action.payload != 'undefined'){
 				let resultFromBackend=extractResult(action);
-				result.headers = ['_id', 'name','equipments', 'metrics', 'resourceURLs', 'majorMuscles', 'minorMuscles', 'tag', 'advancedContent', 'basicContent'];
-				result.headerTexts = ['id', '名字','器械', '数据类型', '图片资源', '主要肌肉', '次要肌肉', '标签', '高级内容', '低级内容'];
+				result.headers = ['_id', 'name','equipments', 'metrics','basicMetricType', 'resourceURLs', 'majorMuscles', 'minorMuscles', 'tag', 'advancedContent', 'basicContent'];
+				result.headerTexts = ['id', '名字','器械', '数据类型','基础数据类型', '图片资源', '主要肌肉', '次要肌肉', '标签', '高级内容', '低级内容'];
 				result.data = resultFromBackend.map((exerciseResult)=>{
 					exerciseResult.metrics = exerciseResult['metrics'].map((metrics)=> {
 						return metrics['name']+' '
@@ -45,6 +45,11 @@ export default function renderResult(state = {headers:[], data:[], headerTexts:[
 					exerciseResult.equipments = exerciseResult['equipments'].map((equipments)=> {
 						return equipments['name']+' '
 					});
+					if(exerciseResult['repetition'] == -1){
+						exerciseResult.basicMetricType = '时长'
+					}else if(exerciseResult['duration'] == -1){
+						exerciseResult.basicMetricType = '次数'
+					}
 					return exerciseResult;
 				});
 				return result

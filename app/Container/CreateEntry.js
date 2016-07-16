@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
 			entryStructure.push({header:'equipments', headerText:'器械', type:'multi-select', data:state.allEquipments});
 			entryStructure.push({header:'basicContent', headerText:'基础教程', type:'textarea'});
 			entryStructure.push({header:'advancedContent', headerText:'高级教程', type:'textarea'});
-			entryStructure.push({header:'repetition-duration', headerText:'计数类型', type:'select', data:['次数', '时长'], placeHolder:'选择类型'});
+			entryStructure.push({header:'repetition-duration', headerText:'基础数据类型', type:'select', data:['次数', '时长'], placeHolder:'选择类型'});
 
 
 			break;
