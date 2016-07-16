@@ -3,7 +3,7 @@
  */
 import {SELECTED_MODEL} from '../Actions/actionTypes'
 
-export default function modelTypeChoice(state = "", action){
+export default function modelType(state = "", action){
 	if(action.type == SELECTED_MODEL){
 		return action.payload
 	}

@@ -3,9 +3,9 @@
  */
 import {ENTRY_CREATED} from '../Actions/actionTypes'
 
-export default function createEntryResult(state = false, action){
+export default function createEntryResult(state = {}, action){
 	if(action.type == ENTRY_CREATED){
-		return action.payload.success
+		return action.payload
 	}
 	return state;
 }

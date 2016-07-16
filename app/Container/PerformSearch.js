@@ -9,7 +9,7 @@ import * as modelTypes from '../model'
 
 const mapStateToProps = (state) => {
 	return {
-		type: state.renderTypeChoice
+		type: state.modelType
 	}
 };
 

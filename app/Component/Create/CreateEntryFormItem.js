@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
+import {FormGroup, ControlLabel, FormControl, Radio} from 'react-bootstrap'
 
 class CreateEntryFormItem extends React.Component {
 	constructor(props) {
@@ -32,6 +32,26 @@ class CreateEntryFormItem extends React.Component {
 						</FormControl>
 					</FormGroup>
 				) ;
+
+			case 'textarea':
+				return(
+					<FormGroup controlId={this.props.entryType.header}>
+						<ControlLabel>{this.props.entryType.headerText}</ControlLabel>
+						<FormControl componentClass={this.props.entryType.type}/>
+					</FormGroup>
+				);
+			case 'select':
+				return(
+						<FormGroup controlId={this.props.entryType.header}>
+							<ControlLabel>{this.props.entryType.headerText}</ControlLabel>
+							<FormControl componentClass="select" placeholder={this.props.entryType.placeholder}>
+								{this.props.entryType.data.map((data) =>{
+									return(<option key={data} value={data}>{data}</option>)
+								})}
+							</FormControl>
+						</FormGroup>
+
+				)
 		}
 	}
 }

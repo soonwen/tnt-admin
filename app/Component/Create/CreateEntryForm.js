@@ -7,6 +7,7 @@ import React from 'react';
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 import CreateEntryFormItem from './CreateEntryFormItem'
 import * as modelTypes from '../../model'
+import * as createEntryStates from './createEntryState'
 
 class CreateEntryForm extends React.Component {
 	constructor(props) {
@@ -18,11 +19,11 @@ class CreateEntryForm extends React.Component {
 				<form>
 					{this.props.entryTypes.map((entryType) =>{
 						return <CreateEntryFormItem key={entryType.header} entryType={entryType}/>
-					})
-					}
+					})}
 					<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onClick={()=>this.props.createEntry(this.formulateRequest(), this.props.type)}>
-					创建
+						创建
 					</button>
+
 				</form>
 		);
 	}
@@ -32,19 +33,28 @@ class CreateEntryForm extends React.Component {
 		this.props.entryTypes.map((entryType) =>{
 			switch (entryType.type){
 				case "text":
+				case "textarea":
 					request[entryType.header] = document.getElementById(entryType.header).value;
 					break;
 				case "multi-select":
 					let selections= [];
-					let	selectOptions = document.getElementById(entryType.header).options;
-					for(let i=0; i<selectOptions.length; i++){
-						if(selectOptions[i].selected){
-							selections.push(selectOptions[i].value)
+					let	multiSelectOptions = document.getElementById(entryType.header).options;
+					for(let i=0; i<multiSelectOptions.length; i++){
+						if(multiSelectOptions[i].selected){
+							selections.push(multiSelectOptions[i].value)
 						}
 					}
 					request[entryType.header] = selections;
 					break;
-
+				case "select":
+					let choices = entryType.header.split('-');
+					let	selectOptions = document.getElementById(entryType.header).options;
+					for(let i=0; i<selectOptions.length; i++){
+						if(selectOptions[i].selected){
+							request[choices[i]] = 0;
+						}
+					}
+					break;
 			}
 
 		});
@@ -57,14 +67,22 @@ class CreateEntryForm extends React.Component {
 
 	}
 	componentDidUpdate(){
-		if(this.props.createRequestSent){
-			console.log('Entry created: '+ this.props.createResult);
-			if(this.props.createResult){
-				alert('创建成功')
-			}else{
-				alert('创建失败')
-			}
-			this.props.acknowledgeResult()
+		switch (this.props.createEntryState){
+			case createEntryStates.CREATE_ENTRY_STATE_CREATE:
+				console.log('creating entry');
+				break;
+			case createEntryStates.CREATE_ENTRY_STATE_PENDING:
+				console.log('create entry request sent');
+				break;
+			case createEntryStates.CREATE_ENTRY_STATE_RECEIVED:
+				console.log('create entry response received, render');
+				if(this.props.createEntryResult.success){
+					alert('创建成功')
+				}else{
+					alert('创建失败: '+this.props.createEntryResult.exception_message)
+				}
+				this.props.acknowledgeResult();
+				break;
 		}
 	}
 }
@@ -73,11 +91,11 @@ CreateEntryForm.propTypes =
 {
 	type: React.PropTypes.string,
 	entryTypes: React.PropTypes.array,
+	createEntryState: React.PropTypes.string.isRequired,
+	createEntryResult: React.PropTypes.object,
 	fetchAll: React.PropTypes.func.isRequired,
 	addInputEntry: React.PropTypes.func.isRequired,
 	createEntry: React.PropTypes.func.isRequired,
-	createResult: React.PropTypes.bool.isRequired,
-	createRequestSent: React.PropTypes.bool.isRequired,
 	acknowledgeResult: React.PropTypes.func.isRequired
 };
 

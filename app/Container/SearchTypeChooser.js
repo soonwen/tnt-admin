@@ -10,7 +10,7 @@ import DataTypeChooser from '../Component/Header/ModelTypeChooser'
 
 const mapStateToProps = (state) => {
 	return {
-		selection: state.renderTypeChoice
+		selection: state.modelType
 	}
 };
 

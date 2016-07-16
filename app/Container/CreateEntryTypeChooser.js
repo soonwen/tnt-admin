@@ -10,7 +10,7 @@ import * as modelTypes from '../model'
 
 const mapStateToProps = (state) => {
 	return {
-		selection: state.renderTypeChoice
+		selection: state.modelType
 	}
 };
 
