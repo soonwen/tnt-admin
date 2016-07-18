@@ -3,6 +3,7 @@
  */
 import * as actionTypes from './actionTypes'
 import fetch from 'isomorphic-fetch'
+import {checkStatus, parseJSON} from '../../common/fetchUtils'
 
 function createAction(type, payload, error, meta){
 	return{
@@ -68,19 +69,29 @@ function postRequest(request, type){
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + window.localStorage.getItem('jwt')
 		},
 		body: JSON.stringify(request)
 	})
 }
+
+function handleHttpError(err){
+	console.log(err);
+	alert('请重新登录');
+	if(err.status == 401){
+		window.location = 'http://www.google.ca'
+	}
+}
+
 
 export function fetchMuscleGroupResult(keyword){
 	let request = {operation: "query", data:{name:{"contains":keyword}}};
 	return dispatch =>{
 		//dispatch(requestMuscleGroupResult());
 		return postRequest(request, 'muscle_group')
-				.then(response => response.json())
-				.catch(err => console.log(err))
+				.then(checkStatus)
+				.then(parseJSON)
 				.then(result => {
 					if(result.success){
 						console.log('data retrieved');
@@ -90,6 +101,7 @@ export function fetchMuscleGroupResult(keyword){
 						console.log('failed to retrieve data')
 					}
 				})
+				.catch(handleHttpError)
 	}
 }
 
@@ -98,8 +110,8 @@ export function fetchMuscleResult(keyword){
 	return dispatch =>{
 		//dispatch(requestMuscleGroupResult());
 		return postRequest(request, 'muscle')
-				.then(response => response.json())
-				.catch(err => console.log(err))
+				.then(checkStatus)
+				.then(parseJSON)
 				.then(result => {
 					if(result.success){
 						console.log('data retrieved');
@@ -109,6 +121,7 @@ export function fetchMuscleResult(keyword){
 						console.log('failed to retrieve data')
 					}
 				})
+				.catch(handleHttpError)
 	}
 }
 
@@ -117,8 +130,8 @@ export function fetchEquipmentResult(keyword){
 	return dispatch =>{
 		//dispatch(requestMuscleGroupResult());
 		return postRequest(request, 'equipment')
-				.then(response => response.json())
-				.catch(err => console.log(err))
+				.then(checkStatus)
+				.then(parseJSON)
 				.then(result => {
 					if(result.success){
 						console.log('data retrieved');
@@ -128,6 +141,7 @@ export function fetchEquipmentResult(keyword){
 						console.log('failed to retrieve data')
 					}
 				})
+				.catch(handleHttpError)
 	}
 }
 
@@ -136,8 +150,8 @@ export function fetchExerciseResult(keyword){
 	return dispatch =>{
 		//dispatch(requestMuscleGroupResult());
 		return postRequest(request, 'exercise')
-				.then(response => response.json())
-				.catch(err => console.log(err))
+				.then(checkStatus)
+				.then(parseJSON)
 				.then(result => {
 					if(result.success){
 						console.log('data retrieved');
@@ -147,6 +161,7 @@ export function fetchExerciseResult(keyword){
 						console.log('failed to retrieve data')
 					}
 				})
+				.catch(handleHttpError)
 	}
 }
 
@@ -154,8 +169,8 @@ export function fetchAllMuscle(){
 	let request = {operation: "query", data:{name:{"contains":""}}};
 	return dispatch =>{
 		return postRequest(request, 'muscle')
-				.then(response => response.json())
-				.catch(err => console.log(err))
+				.then(checkStatus)
+				.then(parseJSON)
 				.then(result => {
 					if(result.success){
 						console.log('data retrieved');
@@ -165,6 +180,7 @@ export function fetchAllMuscle(){
 						console.log('failed to retrieve data')
 					}
 				})
+				.catch(handleHttpError)
 	}
 }
 
@@ -173,8 +189,8 @@ export function fetchAllEquipment(){
 	return dispatch =>{
 		//dispatch(requestMuscleGroupResult());
 		return postRequest(request, 'equipment')
-				.then(response => response.json())
-				.catch(err => console.log(err))
+				.then(checkStatus)
+				.then(parseJSON)
 				.then(result => {
 					if(result.success){
 						console.log('data retrieved');
@@ -184,6 +200,7 @@ export function fetchAllEquipment(){
 						console.log('failed to retrieve data')
 					}
 				})
+				.catch(handleHttpError)
 	}
 }
 
@@ -193,11 +210,8 @@ export function createMuscleGroup(muscleGroup){
 	return dispatch =>{
 		dispatch(createEntryRequestSent());
 		return postRequest(request, 'muscle_group')
-				.then(response => response.json())
-				.catch(err => {
-					console.log(err);
-					dispatch(createEntryResultReceived(result));
-				})
+				.then(checkStatus)
+				.then(parseJSON)
 				.then(result => {
 					if(result.success){
 						console.log('data retrieved');
@@ -205,6 +219,10 @@ export function createMuscleGroup(muscleGroup){
 					}else{
 						console.log('failed to retrieve data')
 					}
+					dispatch(createEntryResultReceived(result));
+				})
+				.catch(err => {
+					console.log(err);
 					dispatch(createEntryResultReceived(result));
 				})
 	}
@@ -215,11 +233,8 @@ export function createMuscle(muscle){
 	return dispatch =>{
 		dispatch(createEntryRequestSent());
 		return postRequest(request, 'muscle')
-				.then(response => response.json())
-				.catch(err => {
-					console.log(err);
-					dispatch(createEntryResultReceived(result));
-				})
+				.then(checkStatus)
+				.then(parseJSON)
 				.then(result => {
 					if(result.success){
 						console.log('data retrieved');
@@ -227,6 +242,10 @@ export function createMuscle(muscle){
 					}else{
 						console.log('failed to retrieve data')
 					}
+					dispatch(createEntryResultReceived(result));
+				})
+				.catch(err => {
+					console.log(err);
 					dispatch(createEntryResultReceived(result));
 				})
 	}
@@ -237,11 +256,8 @@ export function createEquipment(equipment){
 	return dispatch =>{
 		dispatch(createEntryRequestSent());
 		return postRequest(request, 'equipment')
-				.then(response => response.json())
-				.catch(err => {
-					console.log(err);
-					dispatch(createEntryResultReceived(result));
-				})
+				.then(checkStatus)
+				.then(parseJSON)
 				.then(result => {
 					if(result.success){
 						console.log('data retrieved');
@@ -249,6 +265,10 @@ export function createEquipment(equipment){
 					}else{
 						console.log('failed to retrieve data')
 					}
+					dispatch(createEntryResultReceived(result));
+				})
+				.catch(err => {
+					console.log(err);
 					dispatch(createEntryResultReceived(result));
 				})
 	}
@@ -259,11 +279,8 @@ export function createExercise(exercise){
 	return dispatch =>{
 		dispatch(createEntryRequestSent());
 		return postRequest(request, 'exercise')
-				.then(response => response.json())
-				.catch(err => {
-					console.log(err);
-					dispatch(createEntryResultReceived(result));
-				})
+				.then(checkStatus)
+				.then(parseJSON)
 				.then(result => {
 					if(result.success){
 						console.log('data retrieved');
@@ -271,6 +288,10 @@ export function createExercise(exercise){
 					}else{
 						console.log('failed to retrieve data')
 					}
+					dispatch(createEntryResultReceived(result));
+				})
+				.catch(err => {
+					console.log(err);
 					dispatch(createEntryResultReceived(result));
 				})
 	}

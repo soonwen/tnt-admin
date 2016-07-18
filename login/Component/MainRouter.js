@@ -1,15 +1,12 @@
 /**
- * Created by robertzzy on 06/07/16.
+ * Created by robertzzy on 17/07/16.
  */
 'use strict';
 
 import React from 'react';
-import {Router, Route, IndexRoute, hashHistory} from 'react-router'
-import CreateEntryTable from './Create/CreateEntryTable'
-import SearchResultTable from './Search/SearchResultTable'
-import SearchResultRenderer from '../Container/SearchResultRenderer'
+import {Router, Route, hashHistory} from 'react-router'
 
-import Main from './Main/Main'
+import Login from './Login/Login'
 import { createStore, applyMiddleware, compose } from 'redux'
 import mainReducer from '../Reducer/index'
 import thunk from 'redux-thunk';
@@ -25,11 +22,7 @@ export default class MainRouter extends React.Component {
 		return (
 			<Provider store={store}>
 				<Router history={hashHistory}>
-					<Route path="/" component={Main}>
-						<IndexRoute component={SearchResultRenderer} />
-						<Route path="/search" component={SearchResultRenderer}/>
-						<Route path="/create" component={CreateEntryTable}/>
-					</Route>
+					<Route path="/" component={Login}/>
 				</Router>
 			</Provider>
 
