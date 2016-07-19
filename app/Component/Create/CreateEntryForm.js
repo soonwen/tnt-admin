@@ -8,6 +8,7 @@ import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 import CreateEntryFormItem from './CreateEntryFormItem'
 import * as modelTypes from '../../model'
 import * as createEntryStates from './createEntryState'
+import log from '../../LOGGER'
 
 class CreateEntryForm extends React.Component {
 	constructor(props) {
@@ -20,9 +21,10 @@ class CreateEntryForm extends React.Component {
 					{this.props.entryTypes.map((entryType) =>{
 						return <CreateEntryFormItem key={entryType.header} entryType={entryType}/>
 					})}
-					<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onClick={()=>this.props.createEntry(this.formulateRequest(), this.props.type)}>
-						创建
-					</button>
+					{this.props.type == ""?null:
+							<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onClick={()=>this.props.createEntry(this.formulateRequest(), this.props.type)}>
+								创建
+							</button>}
 
 				</form>
 		);
@@ -58,8 +60,8 @@ class CreateEntryForm extends React.Component {
 			}
 
 		});
-		console.log('formulated request');
-		console.log(request);
+		log('formulated request');
+		log(request);
 		return request;
 	}
 	componentDidMount(){
@@ -69,13 +71,13 @@ class CreateEntryForm extends React.Component {
 	componentDidUpdate(){
 		switch (this.props.createEntryState){
 			case createEntryStates.CREATE_ENTRY_STATE_CREATE:
-				console.log('creating entry');
+				log('creating entry');
 				break;
 			case createEntryStates.CREATE_ENTRY_STATE_PENDING:
-				console.log('create entry request sent');
+				log('create entry request sent');
 				break;
 			case createEntryStates.CREATE_ENTRY_STATE_RECEIVED:
-				console.log('create entry response received, render');
+				log('create entry response received, render');
 				if(this.props.createEntryResult.success){
 					alert('创建成功')
 				}else{

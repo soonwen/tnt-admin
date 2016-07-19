@@ -4,6 +4,7 @@
 import {login} from '../Actions/action'
 import { connect } from 'react-redux'
 import LoginForm from '../Component/Form/LoginForm'
+import log from '../../LOGGER'
 
 
 const mapStateToProps = (state) => {
@@ -15,7 +16,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onSubmit: (username, password) => {
-			console.log('login with '+ username+ ' and '+ password);
 			dispatch(login(username, password))
 		}
 	}

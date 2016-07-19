@@ -18,6 +18,7 @@ let cleanDirectories = ['build'];
 
 
 module.exports = (option)=> {
+
 	if(option.app){
 		return {
 			context: path.join(root_dir, 'app'),
@@ -46,7 +47,11 @@ module.exports = (option)=> {
 					template: path.join(root_dir,'template/index.html')
 				}),
 				new Clean(cleanDirectories, root_dir),
-				new ExtractTextPlugin("app.css")
+				new ExtractTextPlugin("app.css"),
+				new webpack.DefinePlugin({
+					DEBUG: option.debug,
+					ENDPOINT : option.debug ? JSON.stringify('http://localhost:3000/'): JSON.stringify('')
+				})
 			]
 		}
 	}else if(option.login){
@@ -77,10 +82,14 @@ module.exports = (option)=> {
 					template: path.join(root_dir,'template/index.html')
 				}),
 				new Clean(cleanDirectories, root_dir),
-				new ExtractTextPlugin("login.css")
+				new ExtractTextPlugin("login.css"),
+				new webpack.DefinePlugin({
+					DEBUG: option.debug,
+					ENDPOINT : option.debug ? JSON.stringify('http://localhost:3000/'): JSON.stringify('')
+				})
 			]
 		}
-	}else if(option.prod){
+	}else if(option.all){
 		cleanDirectories = ['static', 'template'];
 		let assetOutput = path.join(path.join(root_dir,'..'), 'tnt-backend/static');
 		return[{
@@ -107,7 +116,11 @@ module.exports = (option)=> {
 					template: path.join(root_dir,'template/index.html')
 				}),
 				new Clean(cleanDirectories, path.join(path.join(root_dir,'..'), 'tnt-backend')),
-				new ExtractTextPlugin("app.css")
+				new ExtractTextPlugin("app.css"),
+				new webpack.DefinePlugin({
+					DEBUG: option.debug,
+					ENDPOINT : option.debug ? JSON.stringify('http://localhost:3000/'): JSON.stringify('')
+				})
 			]
 		},{
 			context: path.join(root_dir, 'login'),
@@ -132,33 +145,12 @@ module.exports = (option)=> {
 					filename: '../template/login.html',
 					template: path.join(root_dir,'template/index.html')
 				}),
-				new ExtractTextPlugin("login.css")
+				new ExtractTextPlugin("login.css"),
+				new webpack.DefinePlugin({
+					DEBUG: option.debug,
+					ENDPOINT : option.debug ? JSON.stringify('http://localhost:3000/'): JSON.stringify('')
+				})
 			]
 		}]
 	}
-
-	//let serverConfig = {
-	//	context: path.join(root_dir, 'server'),
-	//	entry: './server',
-	//	output:{
-	//		path: output,
-	//		filename: 'server.js'
-	//	},
-	//	devtool:"#inline-source-map",
-	//	resolve: {
-	//		extensions: ['', '.js']
-	//	},
-	//	target: 'node',
-	//	module: {
-	//		loaders: [
-	//			{ test: /\.js$/, loader: 'babel', exclude: [/node_modules/, /__tests__/] },
-	//			{ test: /\.json$/, loader: 'json'}
-	//		]
-	//	}
-	//};
-	//if(prod) {
-	//	configs.push(serverConfig)
-	//}
-	return configs
-
 };

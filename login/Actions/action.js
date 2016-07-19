@@ -5,6 +5,7 @@
 import * as actionTypes from './actionTypes'
 import fetch from 'isomorphic-fetch'
 import {checkStatus, parseJSON} from '../../common/fetchUtils'
+import log from '../../LOGGER'
 
 function createAction(type, payload, error, meta){
 	return{
@@ -30,7 +31,7 @@ function createLoginFailed(){
 
 
 function requestLogin(credentials){
-	return fetch('http://localhost:3000/api/auth/', {
+	return fetch(ENDPOINT +'api/auth/', {
 		method: 'GET',
 		headers: {
 			'Authorization': 'tnt-admin-auth-scheme ' + credentials
@@ -39,10 +40,14 @@ function requestLogin(credentials){
 }
 
 function handleLoginSuccess(result){
-	console.log('login success');
-	console.log(result);
+	log('login success');
+	let claim =JSON.parse(window.atob(result.split('.')[1]));
+	log(claim);
+	log(result);
+	let duration = claim.exp - claim.iat;
 	window.localStorage.setItem('jwt', result);
-	window.location = 'http://localhost:3000/dashboard'
+	document.cookie = "jwt="+result+"; Max-Age="+duration+"; Path=/";
+	window.location.replace(ENDPOINT+'dashboard')
 }
 
 
@@ -55,8 +60,8 @@ export function login(username, password){
 				.then(parseJSON)
 				.then(handleLoginSuccess)
 				.catch((err) => {
-					console.log('login failed');
-					console.log(err);
+					log('login failed');
+					log(err);
 					dispatch(createLoginFailed())
 				})
 	}

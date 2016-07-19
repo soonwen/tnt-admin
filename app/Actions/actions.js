@@ -4,6 +4,7 @@
 import * as actionTypes from './actionTypes'
 import fetch from 'isomorphic-fetch'
 import {checkStatus, parseJSON} from '../../common/fetchUtils'
+import log from '../../LOGGER'
 
 function createAction(type, payload, error, meta){
 	return{
@@ -65,7 +66,7 @@ function createEntryResultReceived(result){
 }
 
 function postRequest(request, type){
-	return fetch('http://localhost:3000/'+ type+'/', {
+	return fetch(ENDPOINT+'api/'+ type+'/', {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
@@ -77,10 +78,10 @@ function postRequest(request, type){
 }
 
 function handleHttpError(err){
-	console.log(err);
-	alert('请重新登录');
+	log(err);
 	if(err.status == 401){
-		window.location = 'http://www.google.ca'
+		alert('请重新登录');
+		window.location.replace(ENDPOINT+'login')
 	}
 }
 
@@ -88,17 +89,17 @@ function handleHttpError(err){
 export function fetchMuscleGroupResult(keyword){
 	let request = {operation: "query", data:{name:{"contains":keyword}}};
 	return dispatch =>{
-		//dispatch(requestMuscleGroupResult());
+
 		return postRequest(request, 'muscle_group')
 				.then(checkStatus)
 				.then(parseJSON)
 				.then(result => {
 					if(result.success){
-						console.log('data retrieved');
-						console.log(result.data);
+						log('data retrieved');
+						log(result.data);
 						dispatch(renderMuscleGroupResult(result));
 					}else{
-						console.log('failed to retrieve data')
+						log('failed to retrieve data')
 					}
 				})
 				.catch(handleHttpError)
@@ -108,17 +109,17 @@ export function fetchMuscleGroupResult(keyword){
 export function fetchMuscleResult(keyword){
 	let request = {operation: "query", data:{name:{"contains":keyword}}};
 	return dispatch =>{
-		//dispatch(requestMuscleGroupResult());
+
 		return postRequest(request, 'muscle')
 				.then(checkStatus)
 				.then(parseJSON)
 				.then(result => {
 					if(result.success){
-						console.log('data retrieved');
-						console.log(result.data);
+						log('data retrieved');
+						log(result.data);
 						dispatch(renderMuscleResult(result));
 					}else{
-						console.log('failed to retrieve data')
+						log('failed to retrieve data')
 					}
 				})
 				.catch(handleHttpError)
@@ -128,17 +129,17 @@ export function fetchMuscleResult(keyword){
 export function fetchEquipmentResult(keyword){
 	let request = {operation: "query", data:{name:{"contains":keyword}}};
 	return dispatch =>{
-		//dispatch(requestMuscleGroupResult());
+
 		return postRequest(request, 'equipment')
 				.then(checkStatus)
 				.then(parseJSON)
 				.then(result => {
 					if(result.success){
-						console.log('data retrieved');
-						console.log(result.data);
+						log('data retrieved');
+						log(result.data);
 						dispatch(renderEquipmentResult(result));
 					}else{
-						console.log('failed to retrieve data')
+						log('failed to retrieve data')
 					}
 				})
 				.catch(handleHttpError)
@@ -148,17 +149,17 @@ export function fetchEquipmentResult(keyword){
 export function fetchExerciseResult(keyword){
 	let request = {operation: "query", data:{keyword:[keyword]}};
 	return dispatch =>{
-		//dispatch(requestMuscleGroupResult());
+
 		return postRequest(request, 'exercise')
 				.then(checkStatus)
 				.then(parseJSON)
 				.then(result => {
 					if(result.success){
-						console.log('data retrieved');
-						console.log(result.data);
+						log('data retrieved');
+						log(result.data);
 						dispatch(renderExerciseResult(result));
 					}else{
-						console.log('failed to retrieve data')
+						log('failed to retrieve data')
 					}
 				})
 				.catch(handleHttpError)
@@ -173,11 +174,11 @@ export function fetchAllMuscle(){
 				.then(parseJSON)
 				.then(result => {
 					if(result.success){
-						console.log('data retrieved');
-						console.log(result.data);
+						log('data retrieved');
+						log(result.data);
 						dispatch(renderAllMuscleResult(result));
 					}else{
-						console.log('failed to retrieve data')
+						log('failed to retrieve data')
 					}
 				})
 				.catch(handleHttpError)
@@ -187,17 +188,17 @@ export function fetchAllMuscle(){
 export function fetchAllEquipment(){
 	let request = {operation: "query", data:{name:{"contains":""}}};
 	return dispatch =>{
-		//dispatch(requestMuscleGroupResult());
+
 		return postRequest(request, 'equipment')
 				.then(checkStatus)
 				.then(parseJSON)
 				.then(result => {
 					if(result.success){
-						console.log('data retrieved');
-						console.log(result.data);
+						log('data retrieved');
+						log(result.data);
 						dispatch(renderAllEquipmentResult(result));
 					}else{
-						console.log('failed to retrieve data')
+						log('failed to retrieve data')
 					}
 				})
 				.catch(handleHttpError)
@@ -214,15 +215,15 @@ export function createMuscleGroup(muscleGroup){
 				.then(parseJSON)
 				.then(result => {
 					if(result.success){
-						console.log('data retrieved');
-						console.log(result.data);
+						log('data retrieved');
+						log(result.data);
 					}else{
-						console.log('failed to retrieve data')
+						log('failed to retrieve data')
 					}
 					dispatch(createEntryResultReceived(result));
 				})
 				.catch(err => {
-					console.log(err);
+					log(err);
 					dispatch(createEntryResultReceived(result));
 				})
 	}
@@ -237,15 +238,15 @@ export function createMuscle(muscle){
 				.then(parseJSON)
 				.then(result => {
 					if(result.success){
-						console.log('data retrieved');
-						console.log(result.data);
+						log('data retrieved');
+						log(result.data);
 					}else{
-						console.log('failed to retrieve data')
+						log('failed to retrieve data')
 					}
 					dispatch(createEntryResultReceived(result));
 				})
 				.catch(err => {
-					console.log(err);
+					log(err);
 					dispatch(createEntryResultReceived(result));
 				})
 	}
@@ -260,15 +261,15 @@ export function createEquipment(equipment){
 				.then(parseJSON)
 				.then(result => {
 					if(result.success){
-						console.log('data retrieved');
-						console.log(result.data);
+						log('data retrieved');
+						log(result.data);
 					}else{
-						console.log('failed to retrieve data')
+						log('failed to retrieve data')
 					}
 					dispatch(createEntryResultReceived(result));
 				})
 				.catch(err => {
-					console.log(err);
+					log(err);
 					dispatch(createEntryResultReceived(result));
 				})
 	}
@@ -283,15 +284,15 @@ export function createExercise(exercise){
 				.then(parseJSON)
 				.then(result => {
 					if(result.success){
-						console.log('data retrieved');
-						console.log(result.data);
+						log('data retrieved');
+						log(result.data);
 					}else{
-						console.log('failed to retrieve data')
+						log('failed to retrieve data')
 					}
 					dispatch(createEntryResultReceived(result));
 				})
 				.catch(err => {
-					console.log(err);
+					log(err);
 					dispatch(createEntryResultReceived(result));
 				})
 	}

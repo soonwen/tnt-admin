@@ -5,6 +5,7 @@ import {selectModel, fetchMuscleGroupResult, fetchEquipmentResult, fetchExercise
 import { connect } from 'react-redux'
 import TypeChooser from '../Component/Search/SearchBar'
 import * as modelTypes from '../model'
+import log from '../../LOGGER'
 
 
 const mapStateToProps = (state) => {
@@ -16,7 +17,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onSearchClicked: (keyword, type) => {
-			console.log('search for '+ type);
+			log('search for '+ type);
 			switch (type){
 				case modelTypes.MUSCLE_GROUP:
 					dispatch(fetchMuscleGroupResult(keyword));

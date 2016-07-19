@@ -23,9 +23,11 @@ class TypeChooser extends React.Component{
 			<div className="search-type-chooser">
 				<SearchTypeChooser/>
 				<SearchField/>
-				<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onClick={()=>this.props.onSearchClicked(document.getElementById("criteria-input").value, this.props.type)}>
-					搜索
-				</button>
+				{this.props.type == ""?null:
+						<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onClick={()=>this.props.onSearchClicked(document.getElementById("criteria-input").value, this.props.type)}>
+							搜索
+						</button>}
+
 			</div>
 		)
 	}

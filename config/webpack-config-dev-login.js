@@ -1,2 +1,2 @@
 require('babel/register');
-module.exports = require('./webpack-config.js')({login:true});
+module.exports = require('./webpack-config.js')({login:true, debug:true});

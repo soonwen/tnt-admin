@@ -2,6 +2,7 @@
  * Created by robertzzy on 09/07/16.
  */
 import * as actionTypes from '../Actions/actionTypes'
+import log from '../../LOGGER'
 
 
 function extractResult(action){
@@ -12,7 +13,7 @@ export default function renderResult(state = {headers:[], data:[], headerTexts:[
 	let type = action.type;
 	switch (type){
 		case actionTypes.MUSCLE_GROUP_SEARCH_RESULT_RECEIVED:
-			console.log("result received: ", action);
+			log("result received: ", action);
 			if(typeof action.payload != 'undefined'){
 				let resultFromBackend=extractResult(action);
 				result.headers = ['_id', 'name', 'imageURLs', 'muscles'];
@@ -27,7 +28,7 @@ export default function renderResult(state = {headers:[], data:[], headerTexts:[
 			}
 			break;
 		case actionTypes.EXERCISE_SEARCH_RESULT_RECEIVED:
-			console.log("result received: ", action);
+			log("result received: ", action);
 			if(typeof action.payload != 'undefined'){
 				let resultFromBackend=extractResult(action);
 				result.headers = ['_id', 'name','equipments', 'metrics','basicMetricType', 'resourceURLs', 'majorMuscles', 'minorMuscles', 'tag', 'advancedContent', 'basicContent'];
@@ -56,7 +57,7 @@ export default function renderResult(state = {headers:[], data:[], headerTexts:[
 			}
 			break;
 		case actionTypes.MUSCLE_SEARCH_RESULT_RECEIVED:
-			console.log("result received: ", action);
+			log("result received: ", action);
 			if(typeof action.payload != 'undefined'){
 				result.headers = ['_id', 'name', 'imageURLs'];
 				result.headerTexts = ['id', '名字','图片资源'];
@@ -65,7 +66,7 @@ export default function renderResult(state = {headers:[], data:[], headerTexts:[
 			}
 			break;
 		case actionTypes.EQUIPMENT_SEARCH_RESULT_RECEIVED:
-			console.log("result received: ", action);
+			log("result received: ", action);
 			if(typeof action.payload != 'undefined'){
 				let resultFromBackend=extractResult(action);
 				result.headers = ['_id', 'name', 'detail', 'imageURLs', 'type'];
