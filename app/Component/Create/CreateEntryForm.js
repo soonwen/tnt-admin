@@ -8,7 +8,7 @@ import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 import CreateEntryFormItem from './CreateEntryFormItem'
 import * as modelTypes from '../../model'
 import * as createEntryStates from './createEntryState'
-import log from '../../LOGGER'
+import log from '../../../LOGGER'
 
 class CreateEntryForm extends React.Component {
 	constructor(props) {

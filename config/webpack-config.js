@@ -91,7 +91,7 @@ module.exports = (option)=> {
 		}
 	}else if(option.all){
 		cleanDirectories = ['static', 'template'];
-		let assetOutput = path.join(path.join(root_dir,'..'), 'tnt-backend/static');
+		let assetOutput = path.join(path.join(root_dir,'..'), 'tnt-backend/app/static');
 		return[{
 			context: path.join(root_dir, 'app'),
 			entry: './app',
@@ -115,7 +115,7 @@ module.exports = (option)=> {
 					filename: '../template/app.html',
 					template: path.join(root_dir,'template/index.html')
 				}),
-				new Clean(cleanDirectories, path.join(path.join(root_dir,'..'), 'tnt-backend')),
+				new Clean(cleanDirectories, path.join(path.join(root_dir,'..'), 'tnt-backend/app')),
 				new ExtractTextPlugin("app.css"),
 				new webpack.DefinePlugin({
 					DEBUG: option.debug,

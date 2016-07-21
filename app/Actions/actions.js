@@ -81,7 +81,7 @@ function handleHttpError(err){
 	log(err);
 	if(err.status == 401){
 		alert('请重新登录');
-		window.location.replace(ENDPOINT+'login')
+		window.location.replace(ENDPOINT)
 	}
 }
 

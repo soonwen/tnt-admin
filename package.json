@@ -8,6 +8,7 @@
     "build-and-load-dev-client-app": "webpack-dev-server --port 3001 --hot --inline --config config/webpack-config-dev-app.js --progress --colors  ",
     "build-and-load-dev-client-login": "webpack-dev-server --port 3001 --hot --inline --config config/webpack-config-dev-login.js --progress --colors  ",
     "build-dev-all":"webpack --config config/webpack-config-dev-all.js --progress --colors  ",
+    "build-prod-all":"webpack --config config/webpack-config-prod-all.js --progress --colors  ",
     "start": "node ./build/server.js"
   },
   "dependencies": {
