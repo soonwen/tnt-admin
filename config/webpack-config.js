@@ -18,7 +18,9 @@ let cleanDirectories = ['build'];
 
 
 module.exports = (option)=> {
-
+	let processVars = {
+		'process.env':{}
+	};
 	if(option.app){
 		return {
 			context: path.join(root_dir, 'app'),
@@ -90,6 +92,11 @@ module.exports = (option)=> {
 			]
 		}
 	}else if(option.all){
+		processVars['process.env'].NODE_ENV = JSON.stringify('production');
+		processVars['process.env'].BROWSER = JSON.stringify(true);
+		processVars['DEBUG'] = option.debug;
+		processVars['ENDPOINT'] = option.debug ? JSON.stringify('http://localhost:3000/'): JSON.stringify('')
+
 		cleanDirectories = ['static', 'template'];
 		let assetOutput = path.join(path.join(root_dir,'..'), 'tnt-backend/app/static');
 		return[{
@@ -97,59 +104,67 @@ module.exports = (option)=> {
 			entry: './app',
 			output:{
 				path: assetOutput,
-				filename: 'app.js'
+				filename: '[hash].js'
 			},
 			resolve: {
 				extensions: ['', '.js', '.jsx']
 			},
 			module: {
 				loaders: [
-					{ test: /\.js?$/, loaders: ['react-hot', 'babel'], exclude: [/node_modules/, /__tests__/] },
+					{ test: /\.js?$/, loader: 'babel', exclude: [/node_modules/, /__tests__/] },
 					{ test: /\.sass$/, loader: ExtractTextPlugin.extract('style', 'css!sass?indentedSyntax')},
 					{ test: /\.json$/, loader: 'json'}
 				]
 			},
-			devtool:"#inline-source-map",
 			plugins:[
+				new webpack.optimize.UglifyJsPlugin({
+					compress: {
+						warnings: false
+					}
+				}),
+				new webpack.PrefetchPlugin("react"),
+				new webpack.optimize.OccurrenceOrderPlugin(true),
+				new webpack.optimize.DedupePlugin(),
 				new HtmlWebpackPlugin({
 					filename: '../template/app.html',
 					template: path.join(root_dir,'template/index.html')
 				}),
 				new Clean(cleanDirectories, path.join(path.join(root_dir,'..'), 'tnt-backend/app')),
-				new ExtractTextPlugin("app.css"),
-				new webpack.DefinePlugin({
-					DEBUG: option.debug,
-					ENDPOINT : option.debug ? JSON.stringify('http://localhost:3000/'): JSON.stringify('')
-				})
+				new ExtractTextPlugin("[hash].css"),
+				new webpack.DefinePlugin(processVars)
 			]
 		},{
 			context: path.join(root_dir, 'login'),
-			entry: './login',
+			entry:'./login',
 			output:{
 				path: assetOutput,
-				filename: 'login.js'
+				filename: '[hash].js'
 			},
 			resolve: {
 				extensions: ['', '.js', '.jsx']
 			},
 			module: {
 				loaders: [
-					{ test: /\.js?$/, loaders: ['react-hot', 'babel'], exclude: [/node_modules/, /__tests__/] },
+					{ test: /\.js?$/, loader: 'babel', exclude: [/node_modules/, /__tests__/] },
 					{ test: /\.sass$/, loader: ExtractTextPlugin.extract('style', 'css!sass?indentedSyntax')},
 					{ test: /\.json$/, loader: 'json'}
 				]
 			},
-			devtool:"#inline-source-map",
 			plugins:[
+				new webpack.optimize.UglifyJsPlugin({
+					compress: {
+						warnings: false
+					}
+				}),
+				new webpack.PrefetchPlugin("react"),
+				new webpack.optimize.OccurrenceOrderPlugin(true),
+				new webpack.optimize.DedupePlugin(),
 				new HtmlWebpackPlugin({
 					filename: '../template/login.html',
 					template: path.join(root_dir,'template/index.html')
 				}),
-				new ExtractTextPlugin("login.css"),
-				new webpack.DefinePlugin({
-					DEBUG: option.debug,
-					ENDPOINT : option.debug ? JSON.stringify('http://localhost:3000/'): JSON.stringify('')
-				})
+				new ExtractTextPlugin("[hash].css"),
+				new webpack.DefinePlugin(processVars)
 			]
 		}]
 	}

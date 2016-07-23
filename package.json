@@ -1,6 +1,6 @@
 {
   "name": "tnt-admin",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "build-dev-app": "webpack --config config/webpack-config-dev-app.js --progress --colors  ",
@@ -8,20 +8,11 @@
     "build-and-load-dev-client-app": "webpack-dev-server --port 3001 --hot --inline --config config/webpack-config-dev-app.js --progress --colors  ",
     "build-and-load-dev-client-login": "webpack-dev-server --port 3001 --hot --inline --config config/webpack-config-dev-login.js --progress --colors  ",
     "build-dev-all":"webpack --config config/webpack-config-dev-all.js --progress --colors  ",
-    "build-prod-all":"webpack --config config/webpack-config-prod-all.js --progress --colors  ",
-    "start": "node ./build/server.js"
+    "build-prod-all":"webpack --config config/webpack-config-prod-all.js --progress --colors  "
   },
   "dependencies": {
-    "body-parser": "~1.15.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
-    "express": "~4.13.4",
-    "jade": "~1.11.0",
-    "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0",
-    "react": "^15.0.0",
-    "react-dom": "^15.0.0",
-    "react-addons-css-transition-group": "^15.0.0",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
     "react-router": "^2.5.2",
     "react-bootstrap": "^0.29.5",
     "react-redux":"^4.4.5",
