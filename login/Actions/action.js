@@ -30,12 +30,17 @@ function createLoginFailed(){
 }
 
 
-function requestLogin(credentials){
+function requestLogin(username, password){
+	let credentials = window.btoa(username+':'+password);
+
 	return fetch(ENDPOINT +'api/auth/', {
-		method: 'GET',
+		method: 'POST',
 		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
 			'Authorization': 'tnt-admin-auth-scheme ' + credentials
-		}
+		},
+		body: JSON.stringify({'username':username})
 	})
 }
 
@@ -52,10 +57,9 @@ function handleLoginSuccess(result){
 
 
 export function login(username, password){
-	let credentials = window.btoa(username+':'+password);
 	return dispatch =>{
 		dispatch(createLoginRequested());
-		return requestLogin(credentials)
+		return requestLogin(username, password)
 				.then(checkStatus)
 				.then(parseJSON)
 				.then(handleLoginSuccess)
