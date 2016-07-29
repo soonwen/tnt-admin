@@ -21,6 +21,7 @@ class SearchResultHeader extends React.Component {
 					return <th key={header}>{header}</th>
 
 				})}
+				<th/>
 			</tr>
 			</thead>
 		);
