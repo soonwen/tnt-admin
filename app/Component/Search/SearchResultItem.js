@@ -20,6 +20,11 @@ class SearchResultItem extends React.Component {
 					{
 						return <td key={header}>{this.props.result[header]}</td>
 					})}
+					<td >
+						<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick={()=>this.props.requestDelete(this.props.result['_id'])}>
+							删除
+						</button>
+					</td>
 				</tr>
 		);
 	}
@@ -27,7 +32,8 @@ class SearchResultItem extends React.Component {
 
 SearchResultItem.propTypes = {
 	result: React.PropTypes.object,
-	headers: React.PropTypes.array
+	headers: React.PropTypes.array,
+	requestDelete: React.PropTypes.func
 };
 
 export default SearchResultItem

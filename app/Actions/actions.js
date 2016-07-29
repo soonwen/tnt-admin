@@ -65,6 +65,49 @@ function createEntryResultReceived(result){
 	return createSimpleAction(actionTypes.ENTRY_CREATED, result)
 }
 
+
+export function addCreateEntryField(entryType){
+	return createSimpleAction(actionTypes.ADD_CREATE_ENTRY_FIELD, entryType);
+}
+
+export function selectModel(type){
+	return createSimpleAction(actionTypes.SELECTED_MODEL, type);
+}
+
+export function acknowledgeCreateEntryResult(){
+	return createSimpleAction(actionTypes.CREATE_ENTRY_RESULT_ACKNOWLEDGED, null);
+
+}
+
+
+export function deleteEntryRequested(id){
+	return createSimpleAction(actionTypes.DELETE_ENTRY_REQUESTED, id);
+}
+
+export function deleteEntryRequestSent(){
+	return createSimpleAction(actionTypes.DELETE_ENTRY_REQUEST_SENT, null);
+}
+
+export function deleteEntryResultReceived(){
+	return createSimpleAction(actionTypes.ENTRY_DELETED, null);
+}
+
+export function deleteRequestCanceled(){
+	return createSimpleAction(actionTypes.DELETE_REQUEST_CANCELED, null);
+}
+
+function deleteRequest(id, type){
+	return fetch(ENDPOINT+'api/'+ type+'/' + id, {
+		method: 'DELETE',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + window.localStorage.getItem('jwt')
+		}
+	})
+}
+
+
 function postRequest(request, type){
 	return fetch(ENDPOINT+'api/'+ type+'/', {
 		method: 'POST',
@@ -298,15 +341,91 @@ export function createExercise(exercise){
 	}
 }
 
-export function addCreateEntryField(entryType){
-	return createSimpleAction(actionTypes.ADD_CREATE_ENTRY_FIELD, entryType);
+
+export function deleteMuscleGroup(id){
+	return dispatch =>{
+		dispatch(deleteEntryRequestSent());
+		return deleteRequest(id, 'muscle_group')
+				.then(checkStatus)
+				.then(parseJSON)
+				.then(result => {
+					if(result.success){
+						log('data retrieved');
+						log(result.data);
+					}else{
+						log('failed to retrieve data')
+					}
+					dispatch(deleteEntryResultReceived());
+				})
+				.catch(err => {
+					log(err);
+					dispatch(deleteEntryResultReceived());
+				})
+	}
 }
 
-export function selectModel(type){
-	return createSimpleAction(actionTypes.SELECTED_MODEL, type);
+export function deleteMuscle(id){
+	return dispatch =>{
+		dispatch(deleteEntryRequestSent());
+		return deleteRequest(id, 'muscle')
+				.then(checkStatus)
+				.then(parseJSON)
+				.then(result => {
+					if(result.success){
+						log('data retrieved');
+						log(result.data);
+					}else{
+						log('failed to retrieve data')
+					}
+					dispatch(deleteEntryResultReceived());
+				})
+				.catch(err => {
+					log(err);
+					dispatch(deleteEntryResultReceived());
+				})
+	}
 }
 
-export function acknowledgeCreateEntryResult(){
-	return createSimpleAction(actionTypes.CREATE_ENTRY_RESULT_ACKNOWLEDGED, null);
+export function deleteEquipment(id){
+	return dispatch =>{
+		dispatch(deleteEntryRequestSent());
+		return deleteRequest(id, 'equipment')
+				.then(checkStatus)
+				.then(parseJSON)
+				.then(result => {
+					if(result.success){
+						log('data retrieved');
+						log(result.data);
+					}else{
+						log('failed to retrieve data')
+					}
+					dispatch(deleteEntryResultReceived());
+				})
+				.catch(err => {
+					log(err);
+					dispatch(deleteEntryResultReceived());
+				})
+	}
+}
 
+export function deleteExercise(id){
+	return dispatch =>{
+		dispatch(deleteEntryRequestSent());
+		return deleteRequest(id, 'exercise')
+				.then(checkStatus)
+				.then(parseJSON)
+				.then(result => {
+					if(result.success){
+						log('data retrieved');
+						log(result.data);
+					}else{
+						log('failed to retrieve data')
+					}
+					dispatch(deleteEntryResultReceived());
+				})
+				.catch(err => {
+					log(err);
+					dispatch(deleteEntryResultReceived());
+				})
+	}
 }
