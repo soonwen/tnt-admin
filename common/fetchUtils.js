@@ -15,3 +15,16 @@ export function checkStatus(response) {
 export function parseJSON(response) {
 	return response.json()
 }
+
+
+export function endpoint(){
+	if(LOCAL){
+		return JSON.stringify('http://localhost:3000/')
+	}else{
+		return window.location.origin +'/'
+	}
+}
+
+export function generateLoginRequest(credentials){
+
+}

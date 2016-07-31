@@ -2,10 +2,9 @@
  * Created by robertzzy on 17/07/16.
  */
 
-import { combineReducers } from 'redux'
 import loginState from './loginState'
+import sessionState from './sessionState'
 
+const loginReducers = {loginState, sessionState};
 
-const mainReducer = combineReducers({loginState});
-
-export default mainReducer;
+export default loginReducers;

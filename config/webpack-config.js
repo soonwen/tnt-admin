@@ -13,7 +13,7 @@ import Clean from 'clean-webpack-plugin';
 
 // base app dir
 let root_dir = path.resolve(__dirname, '..');
-let output = path.join(root_dir, 'build');
+
 let cleanDirectories = ['build'];
 
 
@@ -22,65 +22,52 @@ module.exports = (option)=> {
 		'process.env': {}
 	};
 	processVars['DEBUG'] = option.debug;
-	processVars['ENDPOINT'] = option.debug ? JSON.stringify('http://localhost:3000/') : JSON.stringify('')
-	let commonPlugin = [];
+	processVars['LOCAL'] = option.local;
+
+	let output = option.local ? path.join(root_dir, 'build') : path.join(path.join(root_dir,'..'), 'tnt-backend/app/static');
 	let appPlugin = [];
-	let loginPlugin = [];
-	if (option.app) {
+
+	if(option.local){
 		appPlugin.push(
-			new HtmlWebpackPlugin({
-				filename: 'index.html',
-				template: path.join(root_dir, 'template/index.html')
-			}),
-			new Clean(cleanDirectories, root_dir),
-			new ExtractTextPlugin("app.css"))
-	} else if (option.login) {
-		loginPlugin.push(
-			new HtmlWebpackPlugin({
-				filename: 'index.html',
-				template: path.join(root_dir, 'template/index.html')
-			}),
-			new Clean(cleanDirectories, root_dir),
-			new ExtractTextPlugin("login.css"))
-	} else if (option.all) {
+				new HtmlWebpackPlugin({
+					filename: 'index.html',
+					template: path.join(root_dir, 'template/index.html')
+				}),
+				new Clean(cleanDirectories, root_dir),
+				new ExtractTextPlugin("app.css"))
+	}else{
 		cleanDirectories = ['static', 'template'];
-		processVars['process.env'].NODE_ENV = JSON.stringify('production');
+		if(option.debug){
+			processVars['process.env'].NODE_ENV = JSON.stringify('production');
+			appPlugin.push(
+					new webpack.optimize.UglifyJsPlugin({
+						compress: {
+							warnings: false
+						}
+					}),
+					new webpack.PrefetchPlugin("react"),
+					new webpack.optimize.OccurrenceOrderPlugin(true),
+					new webpack.optimize.DedupePlugin());
+		}
 		processVars['process.env'].BROWSER = JSON.stringify(true);
-		commonPlugin.push(
-			new webpack.optimize.UglifyJsPlugin({
-				compress: {
-					warnings: false
-				}
-			}),
-			new webpack.PrefetchPlugin("react"),
-			new webpack.optimize.OccurrenceOrderPlugin(true),
-			new webpack.optimize.DedupePlugin());
 		appPlugin.push(
-			new HtmlWebpackPlugin({
-				filename: '../template/app.html',
-				template: path.join(root_dir, 'template/index.html')
-			}),
-			new Clean(cleanDirectories, path.join(path.join(root_dir, '..'), 'tnt-backend/app')),
-			new ExtractTextPlugin("[hash].css"));
-		loginPlugin.push(
-			new HtmlWebpackPlugin({
-				filename: '../template/login.html',
-				template: path.join(root_dir, 'template/index.html')
-			}),
-			new ExtractTextPlugin("[hash].css"))
+				new HtmlWebpackPlugin({
+					filename: '../template/app.html',
+					template: path.join(root_dir, 'template/index.html')
+				}),
+				new Clean(cleanDirectories, path.join(path.join(root_dir, '..'), 'tnt-backend/app')),
+				new ExtractTextPlugin("[hash].css"));
 	}
 
-	commonPlugin.push(new webpack.DefinePlugin(processVars));
-	Array.prototype.push.apply(appPlugin, commonPlugin);
-	Array.prototype.push.apply(loginPlugin, commonPlugin);
+	appPlugin.push(new webpack.DefinePlugin(processVars));
 
 
-	if(option.app){
+	if(option.local){
 		return {
-			context: path.join(root_dir, 'app'),
+			context: root_dir,
 			entry: './app',
 			output:{
-				path: path.join(output, 'app'),
+				path: output,
 				filename: 'app.js'
 			},
 			resolve: {
@@ -99,37 +86,12 @@ module.exports = (option)=> {
 			},
 			plugins:appPlugin
 		}
-	}else if(option.login){
-		return {
-			context: path.join(root_dir, 'login'),
-			entry: './login',
-			output:{
-				path: path.join(output, 'login'),
-				filename: 'login.js'
-			},
-			resolve: {
-				extensions: ['', '.js', '.jsx']
-			},
-			module: {
-				loaders: [
-					{ test: /\.js?$/, loaders: ['react-hot', 'babel'], exclude: [/node_modules/, /__tests__/] },
-					{ test: /\.sass$/, loader: ExtractTextPlugin.extract('style', 'css!sass?indentedSyntax')},
-					{ test: /\.json$/, loader: 'json'}
-				]
-			},
-			devtool:"#inline-source-map",
-			devServer: {
-				contentBase: path.join(output, 'login')
-			},
-			plugins:loginPlugin
-		}
-	}else if(option.all){
-		let assetOutput = path.join(path.join(root_dir,'..'), 'tnt-backend/app/static');
-		return[{
-			context: path.join(root_dir, 'app'),
+	}else {
+		return{
+			context: root_dir,
 			entry: './app',
 			output:{
-				path: assetOutput,
+				path: output,
 				filename: '[hash].js'
 			},
 			resolve: {
@@ -143,24 +105,6 @@ module.exports = (option)=> {
 				]
 			},
 			plugins:appPlugin
-		},{
-			context: path.join(root_dir, 'login'),
-			entry:'./login',
-			output:{
-				path: assetOutput,
-				filename: '[hash].js'
-			},
-			resolve: {
-				extensions: ['', '.js', '.jsx']
-			},
-			module: {
-				loaders: [
-					{ test: /\.js?$/, loader: 'babel', exclude: [/node_modules/, /__tests__/] },
-					{ test: /\.sass$/, loader: ExtractTextPlugin.extract('style', 'css!sass?indentedSyntax')},
-					{ test: /\.json$/, loader: 'json'}
-				]
-			},
-			plugins:loginPlugin
-		}]
+		}
 	}
 };
