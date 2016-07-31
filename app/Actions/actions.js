@@ -3,7 +3,7 @@
  */
 import * as actionTypes from './actionTypes'
 import fetch from 'isomorphic-fetch'
-import {checkStatus, parseJSON} from '../../common/fetchUtils'
+import {checkStatus, parseJSON, endpoint} from '../../common/fetchUtils'
 import log from '../../LOGGER'
 
 function createAction(type, payload, error, meta){
@@ -97,7 +97,7 @@ export function deleteRequestCanceled(){
 }
 
 function deleteRequest(id, type){
-	return fetch(ENDPOINT+'api/'+ type+'/' + id, {
+	return fetch(endpoint()+'api/'+ type+'/' + id, {
 		method: 'DELETE',
 		headers: {
 			'Accept': 'application/json',
@@ -109,7 +109,7 @@ function deleteRequest(id, type){
 
 
 function postRequest(request, type){
-	return fetch(ENDPOINT+'api/'+ type+'/', {
+	return fetch(endpoint()+'api/'+ type+'/', {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
@@ -124,7 +124,7 @@ function handleHttpError(err){
 	log(err);
 	if(err.status == 401){
 		alert('请重新登录');
-		window.location.replace(ENDPOINT)
+		window.location.replace(endpoint())
 	}
 }
 

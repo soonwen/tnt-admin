@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import {Router, Route, hashHistory} from 'react-router'
+import {Router, Route, browserHistory} from 'react-router'
 
 import Login from './Login/Login'
 import { createStore, applyMiddleware, compose } from 'redux'
@@ -21,7 +21,7 @@ export default class MainRouter extends React.Component {
 	render(){
 		return (
 			<Provider store={store}>
-				<Router history={hashHistory}>
+				<Router history={browserHistory}>
 					<Route path="/" component={Login}/>
 				</Router>
 			</Provider>

@@ -22,7 +22,6 @@ module.exports = (option)=> {
 		'process.env': {}
 	};
 	processVars['DEBUG'] = option.debug;
-	processVars['ENDPOINT'] = option.debug ? JSON.stringify('http://localhost:3000/') : JSON.stringify('')
 	let commonPlugin = [];
 	let appPlugin = [];
 	let loginPlugin = [];

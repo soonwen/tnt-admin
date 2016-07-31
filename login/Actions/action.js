@@ -4,7 +4,7 @@
 
 import * as actionTypes from './actionTypes'
 import fetch from 'isomorphic-fetch'
-import {checkStatus, parseJSON} from '../../common/fetchUtils'
+import {checkStatus, parseJSON, endpoint} from '../../common/fetchUtils'
 import log from '../../LOGGER'
 
 function createAction(type, payload, error, meta){
@@ -33,7 +33,7 @@ function createLoginFailed(){
 function requestLogin(username, password){
 	let credentials = window.btoa(username+':'+password);
 
-	return fetch(ENDPOINT +'api/auth/', {
+	return fetch(endpoint() +'api/auth/', {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
@@ -52,7 +52,7 @@ function handleLoginSuccess(result){
 	let duration = claim.exp - claim.iat;
 	window.localStorage.setItem('jwt', result);
 	document.cookie = "jwt="+result+"; Max-Age="+duration+"; Path=/";
-	window.location.replace(ENDPOINT+'dashboard')
+	window.location.replace(endpoint()+'dashboard')
 }
 
 

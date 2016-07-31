@@ -18,7 +18,7 @@ class LoginForm extends React.Component {
 
 	render() {
 		return (
-			<Form horizontal className="login-form" onSubmit={()=>this.props.onSubmit(document.getElementById("username").value, document.getElementById("password").value)}>
+			<Form horizontal className="login-form">
 				<FormGroup controlId="username">
 					<Col>
 						<FormControl type="text" placeholder="用户名" bsClass="login-field"/>
@@ -31,7 +31,7 @@ class LoginForm extends React.Component {
 				</FormGroup>
 				<FormGroup controlId="password">
 					<Col>
-						<Button type="submit">
+						<Button onClick={()=>this.props.onSubmit(document.getElementById("username").value, document.getElementById("password").value)}>
 							登录
 						</Button>
 					</Col>

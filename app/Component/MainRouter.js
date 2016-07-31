@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import {Router, Route, IndexRoute, hashHistory} from 'react-router'
+import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
 import CreateEntryTable from './Create/CreateEntryTable'
 import SearchResultTable from './Search/SearchResultTable'
 import SearchResultRenderer from '../Container/SearchResultRenderer'
@@ -24,11 +24,11 @@ export default class MainRouter extends React.Component {
 	render(){
 		return (
 			<Provider store={store}>
-				<Router history={hashHistory}>
-					<Route path="/" component={Main}>
-						<IndexRoute component={SearchResultRenderer} />
-						<Route path="/search" component={SearchResultRenderer}/>
-						<Route path="/create" component={CreateEntryTable}/>
+				<Router history={browserHistory}>
+					<Route path="/dashboard" component={Main}>
+						<IndexRedirect to="/dashboard/search" />
+						<Route path="search" component={SearchResultRenderer}/>
+						<Route path="create" component={CreateEntryTable}/>
 					</Route>
 				</Router>
 			</Provider>
