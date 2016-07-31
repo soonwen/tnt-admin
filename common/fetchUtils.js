@@ -18,8 +18,8 @@ export function parseJSON(response) {
 
 
 export function endpoint(){
-	if(DEBUG){
-		return JSON.stringify('http://localhost:3000/')
+	if(LOCAL){
+		return 'http://localhost:3000/'
 	}else{
 		return window.location.origin +'/'
 	}

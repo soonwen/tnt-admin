@@ -5,8 +5,8 @@
   "scripts": {
     "build-dev-app": "webpack --config config/webpack-config-dev-app.js --progress --colors  ",
     "build-dev-login": "webpack --config config/webpack-config-dev-login.js --progress --colors  ",
-    "build-and-load-dev-client-app": "webpack-dev-server --port 3001 --hot --inline --config config/webpack-config-dev-app.js --progress --colors  ",
-    "build-and-load-dev-client-login": "webpack-dev-server --port 3001 --hot --inline --config config/webpack-config-dev-login.js --progress --colors  ",
+    "build-and-load-dev-client-app": "node dev-server-dashboard",
+    "build-and-load-dev-client-login": "node dev-server-login",
     "build-dev-all":"webpack --config config/webpack-config-dev-all.js --progress --colors  ",
     "build-prod-all":"webpack --config config/webpack-config-prod-all.js --progress --colors  "
   },
@@ -46,6 +46,8 @@
     "less-loader":"^2.2.1",
     "sass-loader": "1.0.2",
     "style-loader": "^0.10.2",
-    "url-loader": "^0.5.5"
+    "url-loader": "^0.5.5",
+    "express": "^4.14.0",
+    "proxy-middleware": "^0.15.0"
   }
 }

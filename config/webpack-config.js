@@ -22,6 +22,8 @@ module.exports = (option)=> {
 		'process.env': {}
 	};
 	processVars['DEBUG'] = option.debug;
+	processVars['LOCAL'] = !option.all;
+
 	let commonPlugin = [];
 	let appPlugin = [];
 	let loginPlugin = [];
@@ -77,8 +79,13 @@ module.exports = (option)=> {
 	if(option.app){
 		return {
 			context: path.join(root_dir, 'app'),
-			entry: './app',
+			entry: [
+				'./app',
+				'webpack/hot/dev-server',
+				'webpack-dev-server/client?http://localhost:3002'
+			],
 			output:{
+				publicPath: "http://localhost:3002/assets/",
 				path: path.join(output, 'app'),
 				filename: 'app.js'
 			},
@@ -101,8 +108,13 @@ module.exports = (option)=> {
 	}else if(option.login){
 		return {
 			context: path.join(root_dir, 'login'),
-			entry: './login',
+			entry: [
+				'./login',
+				'webpack/hot/dev-server',
+				'webpack-dev-server/client?http://localhost:3002'
+			],
 			output:{
+				publicPath: "http://localhost:3002/assets/",
 				path: path.join(output, 'login'),
 				filename: 'login.js'
 			},
