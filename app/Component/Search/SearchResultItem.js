@@ -21,8 +21,13 @@ class SearchResultItem extends React.Component {
 						return <td key={header}>{this.props.result[header]}</td>
 					})}
 					<td >
-						<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onClick={()=>this.props.requestDelete(this.props.result['_id'])}>
+						<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent " onClick={()=>this.props.requestDelete(this.props.result['_id'])}>
 							删除
+						</button>
+					</td>
+					<td>
+						<button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={()=>{console.log('update resource')}}>
+							更新
 						</button>
 					</td>
 				</tr>

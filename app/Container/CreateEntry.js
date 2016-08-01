@@ -63,7 +63,8 @@ const mapDispatchToProps = (dispatch) => {
 		addInputEntry: (entryType) =>{
 			dispatch(addCreateEntryField(entryType))
 		},
-		createEntry: (payload, type) =>{
+		createEntry: (event, payload, type) =>{
+			event.preventDefault();
 			switch (type){
 				case modelTypes.MUSCLE_GROUP:
 					dispatch(createMuscleGroup(payload));

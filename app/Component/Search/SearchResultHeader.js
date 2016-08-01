@@ -12,7 +12,12 @@ class SearchResultHeader extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-
+	renderAdditionHeader(){
+		if(this.props.headers.length != 0){
+			return <th/>
+		}
+	}
+	
 	render(){
 		return (
 			<thead>
@@ -21,7 +26,8 @@ class SearchResultHeader extends React.Component {
 					return <th key={header}>{header}</th>
 
 				})}
-				<th/>
+				{this.renderAdditionHeader()}
+				{this.renderAdditionHeader()}
 			</tr>
 			</thead>
 		);

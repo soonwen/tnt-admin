@@ -27,12 +27,19 @@ export default class MainRouter extends React.Component {
 				<Router history={browserHistory}>
 					<Route path="/dashboard" component={Main}>
 						<IndexRedirect to="/dashboard/search" />
-						<Route path="search" component={SearchResultRenderer}/>
+						<Route path="search" component={SearchResultRenderer}>
+							<Route path="update/:id" />
+						</Route>
 						<Route path="create" component={CreateEntryTable}/>
 					</Route>
 				</Router>
 			</Provider>
 
 		);
+	}
+	componentDidUpdate() {
+		// This upgrades all upgradable components (i.e. with 'mdl-js-*' class)
+		componentHandler.upgradeDom();
+
 	}
 }

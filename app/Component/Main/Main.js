@@ -25,10 +25,5 @@ export default class Main extends React.Component {
 				</div>
 		);
 	}
-
-	componentDidUpdate() {
-		// This upgrades all upgradable components (i.e. with 'mdl-js-*' class)
-		componentHandler.upgradeDom();
-
-	}
+	
 }

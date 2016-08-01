@@ -33,6 +33,7 @@ module.exports = (option)=> {
 				filename: 'index.html',
 				template: path.join(root_dir, 'template/index.html')
 			}),
+			new webpack.HotModuleReplacementPlugin(),
 			new Clean(cleanDirectories, root_dir),
 			new ExtractTextPlugin("app.css"))
 	} else if (option.login) {
@@ -41,6 +42,7 @@ module.exports = (option)=> {
 				filename: 'index.html',
 				template: path.join(root_dir, 'template/index.html')
 			}),
+			new webpack.HotModuleReplacementPlugin(),
 			new Clean(cleanDirectories, root_dir),
 			new ExtractTextPlugin("login.css"))
 	} else if (option.all) {

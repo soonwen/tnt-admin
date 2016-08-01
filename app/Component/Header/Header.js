@@ -22,8 +22,8 @@ export default class Header extends React.Component {
 					<span className="mdl-layout-title"><Link to="/dashboard">T.N.T 数据管理</Link></span>
 					<div className="mdl-layout-spacer"></div>
 					<nav className="mdl-navigation">
-						<Link to="/dashboard/search" className="mdl-navigation__link" >搜索</Link>
-						<Link to="/dashboard/create" className="mdl-navigation__link" >添加</Link>
+						<Link to="/dashboard/search" className="mdl-navigation__link" activeClassName="active-link">搜索</Link>
+						<Link to="/dashboard/create" className="mdl-navigation__link" activeClassName="active-link">添加</Link>
 					</nav>
 				</div>
 			</header>
