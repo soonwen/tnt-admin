@@ -13,12 +13,24 @@ class SearchResultItem extends React.Component {
 		super(props);
 	}
 
+	polishResult(resultField){
+		if(Array.isArray(resultField)){
+			let display = '';
+			for(let item of resultField){
+				display += (item +' ');
+			}
+			return display
+		}else{
+			return resultField
+		}
+	}
+
 	render(){
 		return (
 				<tr>
 					{this.props.headers.map((header) =>
 					{
-						return <td key={header}>{this.props.result[header]}</td>
+						return <td key={header}>{this.polishResult(this.props.result[header])}</td>
 					})}
 					<td >
 						<button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent " onClick={()=>this.props.requestDelete(this.props.result['_id'])}>
@@ -26,7 +38,7 @@ class SearchResultItem extends React.Component {
 						</button>
 					</td>
 					<td>
-						<button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={()=>{console.log('update resource')}}>
+						<button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={()=>this.props.requestUpdate(this.props.result)}>
 							更新
 						</button>
 					</td>
@@ -38,7 +50,8 @@ class SearchResultItem extends React.Component {
 SearchResultItem.propTypes = {
 	result: React.PropTypes.object,
 	headers: React.PropTypes.array,
-	requestDelete: React.PropTypes.func
+	requestDelete: React.PropTypes.func,
+	requestUpdate: React.PropTypes.func
 };
 
 export default SearchResultItem

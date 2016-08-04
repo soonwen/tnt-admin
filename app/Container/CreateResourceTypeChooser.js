@@ -30,9 +30,9 @@ const mapDispatchToProps = (dispatch) => {
 		}
 	}
 };
-const CreateEntryTypeChooser = connect(
+const CreateResourceTypeChooser = connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(DataTypeChooser);
 
-export default CreateEntryTypeChooser
+export default CreateResourceTypeChooser

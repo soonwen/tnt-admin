@@ -26,8 +26,9 @@ export default function renderResult(state = {headers:[], data:[], headerTexts:[
 				result.headerTexts = ['id', '名字','图片资源', '肌肉'];
 				result.data = resultFromBackend.map((muscleGroupResult)=>{
 					muscleGroupResult.muscles = muscleGroupResult['muscles'].map((muscle)=> {
-						return muscle['name']+' '
+						return muscle['name']
 					});
+					
 					return muscleGroupResult;
 				});
 				return result
@@ -41,18 +42,24 @@ export default function renderResult(state = {headers:[], data:[], headerTexts:[
 				result.headers = ['_id', 'name','equipments', 'metrics','basicMetricType', 'resourceURLs', 'majorMuscles', 'minorMuscles', 'tag', 'advancedContent', 'basicContent'];
 				result.headerTexts = ['id', '名字','器械', '数据类型','基础数据类型', '图片资源', '主要肌肉', '次要肌肉', '标签', '高级内容', '低级内容'];
 				result.data = resultFromBackend.map((exerciseResult)=>{
+					
 					exerciseResult.metrics = exerciseResult['metrics'].map((metrics)=> {
-						return metrics['name']+' '
+						return metrics['name']
 					});
 					exerciseResult.minorMuscles = exerciseResult['minorMuscles'].map((minorMuscles)=> {
-						return minorMuscles['name']+' '
+						return minorMuscles['name']
 					});
+					
 					exerciseResult.majorMuscles = exerciseResult['majorMuscles'].map((majorMuscles)=> {
-						return majorMuscles['name']+' '
+						return majorMuscles['name']
 					});
+					
 					exerciseResult.equipments = exerciseResult['equipments'].map((equipments)=> {
-						return equipments['name']+' '
+						return equipments['name']
 					});
+					
+
+
 					if(exerciseResult['repetition'] == -1){
 						exerciseResult.basicMetricType = '时长'
 					}else if(exerciseResult['duration'] == -1){

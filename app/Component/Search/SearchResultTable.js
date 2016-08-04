@@ -34,7 +34,7 @@ class SearchResultTable extends React.Component {
 						<SearchResultHeader headers={this.props.results.headerTexts}/>
 						<tbody>
 							{this.props.results.data.map((result) =>{
-								return <SearchResultItem key={result['_id']} headers={this.props.results.headers} result={result} requestDelete={this.props.requestDelete}/>
+								return <SearchResultItem key={result['_id']} headers={this.props.results.headers} result={result} requestDelete={this.props.requestDelete} requestUpdate={this.props.updateResource}/>
 								})
 							}
 						</tbody>
@@ -63,7 +63,8 @@ SearchResultTable.propTypes = {
 	deleteEntryState: React.PropTypes.object,
 	requestDelete: React.PropTypes.func,
 	deleteEntry: React.PropTypes.func,
-	cancelDeleteRequest: React.PropTypes.func
+	cancelDeleteRequest: React.PropTypes.func,
+	updateResource: React.PropTypes.func
 };
 
 export default SearchResultTable

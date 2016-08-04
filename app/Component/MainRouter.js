@@ -5,8 +5,8 @@
 
 import React from 'react';
 import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
-import CreateEntryTable from './Create/CreateEntryTable'
-import SearchResultTable from './Search/SearchResultTable'
+import CreateEntryTable from './Create/CreatResourceTable'
+import UpdateResource from '../Container/UpdateResource'
 import SearchResultRenderer from '../Container/SearchResultRenderer'
 
 import Main from './Main/Main'
@@ -27,10 +27,9 @@ export default class MainRouter extends React.Component {
 				<Router history={browserHistory}>
 					<Route path="/dashboard" component={Main}>
 						<IndexRedirect to="/dashboard/search" />
-						<Route path="search" component={SearchResultRenderer}>
-							<Route path="update/:id" />
-						</Route>
+						<Route path="search" component={SearchResultRenderer}/>
 						<Route path="create" component={CreateEntryTable}/>
+						<Route path="update" component={UpdateResource}/>
 					</Route>
 				</Router>
 			</Provider>

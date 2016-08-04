@@ -1,12 +1,11 @@
 /**
- * Created by robertzzy on 15/07/16.
+ * Created by robertzzy on 01/08/16.
  */
-'use strict';
 
 import React from 'react';
-import {FormGroup, ControlLabel, FormControl, Radio} from 'react-bootstrap'
+import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 
-class CreateEntryFormItem extends React.Component {
+class BasicResourceFormItem extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -42,23 +41,23 @@ class CreateEntryFormItem extends React.Component {
 				);
 			case 'select':
 				return(
-						<FormGroup controlId={this.props.entryType.header}>
-							<ControlLabel>{this.props.entryType.headerText}</ControlLabel>
-							<FormControl componentClass="select" placeholder={this.props.entryType.placeholder}>
-								{this.props.entryType.data.map((data) =>{
-									return(<option key={data} value={data}>{data}</option>)
-								})}
-							</FormControl>
-						</FormGroup>
+					<FormGroup controlId={this.props.entryType.header}>
+						<ControlLabel>{this.props.entryType.headerText}</ControlLabel>
+						<FormControl componentClass="select" placeholder={this.props.entryType.placeholder}>
+							{this.props.entryType.data.map((data) =>{
+								return(<option key={data} value={data}>{data}</option>)
+							})}
+						</FormControl>
+					</FormGroup>
 
 				)
 		}
 	}
 }
 
-CreateEntryFormItem.propTypes =
+BasicResourceFormItem.propTypes =
 {
 	entryType: React.PropTypes.object
 };
 
-export default CreateEntryFormItem;
+export default BasicResourceFormItem;

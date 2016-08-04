@@ -59,23 +59,19 @@ function renderAllMuscleResult(result){
 
 
 function createEntryRequestSent(){
-	return createSimpleAction(actionTypes.CREATE_ENTRY_REQUEST_SENT, null)
+	return createSimpleAction(actionTypes.CREATE_RESOURCE_REQUEST_SENT, null)
 }
 function createEntryResultReceived(result){
-	return createSimpleAction(actionTypes.ENTRY_CREATED, result)
+	return createSimpleAction(actionTypes.RESOURCE_CREATED, result)
 }
 
-
-export function addCreateEntryField(entryType){
-	return createSimpleAction(actionTypes.ADD_CREATE_ENTRY_FIELD, entryType);
-}
 
 export function selectModel(type){
 	return createSimpleAction(actionTypes.SELECTED_MODEL, type);
 }
 
 export function acknowledgeCreateEntryResult(){
-	return createSimpleAction(actionTypes.CREATE_ENTRY_RESULT_ACKNOWLEDGED, null);
+	return createSimpleAction(actionTypes.CREATE_RESOURCE_RESULT_ACKNOWLEDGED, null);
 
 }
 
@@ -96,6 +92,31 @@ export function deleteRequestCanceled(){
 	return createSimpleAction(actionTypes.DELETE_REQUEST_CANCELED, null);
 }
 
+
+
+export function updateResourceRequestSent(){
+	return createSimpleAction(actionTypes.UPDATE_RESOURCE_REQUEST_SENT, null);
+}
+
+export function updateResourceResultAcknowledged(){
+	return createSimpleAction(actionTypes.UPDATE_RESOURCE_RESULT_ACKNOWLEDGED, null);
+}
+
+export function resourceUpdated(result){
+	return createSimpleAction(actionTypes.RESOURCE_UPDATED, result);
+}
+
+
+export function resourceToUpdateChosen(resource){
+	return createSimpleAction(actionTypes.RESOURCE_TO_UPDATE_CHOSEN, resource);
+}
+
+
+export function updateResourceRequirementFilled(){
+	return createSimpleAction(actionTypes.UPDATE_RESOURCE_REQUIREMENT_FILLED, null);
+}
+
+
 function deleteRequest(id, type){
 	return fetch(endpoint()+'api/'+ type+'/' + id, {
 		method: 'DELETE',
@@ -107,6 +128,16 @@ function deleteRequest(id, type){
 	})
 }
 
+function getRequest(id, type){
+	return fetch(endpoint()+'api/'+ type+'/' + id, {
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + window.localStorage.getItem('jwt')
+		}
+	})
+}
 
 function postRequest(request, type){
 	return fetch(endpoint()+'api/'+ type+'/', {
@@ -429,3 +460,97 @@ export function deleteExercise(id){
 				})
 	}
 }
+
+
+export function updateMuscleGroup(muscleGroup){
+	let request = {operation: "update", data:muscleGroup};
+	return dispatch =>{
+		dispatch(updateResourceRequestSent());
+		return postRequest(request, 'muscle_group')
+			.then(checkStatus)
+			.then(parseJSON)
+			.then(result => {
+				if(result.success){
+					log('data retrieved');
+					log(result.data);
+				}else{
+					log('failed to retrieve data')
+				}
+				dispatch(resourceUpdated(result));
+			})
+			.catch(err => {
+				log(err);
+				dispatch(resourceUpdated(result));
+			})
+	}
+}
+
+export function updateMuscle(muscle){
+	let request = {operation: "update", data:muscle};
+	return dispatch =>{
+		dispatch(updateResourceRequestSent());
+		return postRequest(request, 'muscle')
+			.then(checkStatus)
+			.then(parseJSON)
+			.then(result => {
+				if(result.success){
+					log('data retrieved');
+					log(result.data);
+				}else{
+					log('failed to retrieve data')
+				}
+				dispatch(resourceUpdated(result));
+			})
+			.catch(err => {
+				log(err);
+				dispatch(resourceUpdated(result));
+			})
+	}
+}
+
+export function updateEquipment(equipment){
+	let request = {operation: "update", data:equipment};
+	return dispatch =>{
+		dispatch(updateResourceRequestSent());
+		return postRequest(request, 'equipment')
+			.then(checkStatus)
+			.then(parseJSON)
+			.then(result => {
+				if(result.success){
+					log('data retrieved');
+					log(result.data);
+				}else{
+					log('failed to retrieve data')
+				}
+				dispatch(resourceUpdated(result));
+			})
+			.catch(err => {
+				log(err);
+				dispatch(resourceUpdated(result));
+			})
+	}
+}
+
+export function updateExercise(exercise){
+	let request = {operation: "update", data:exercise};
+	return dispatch =>{
+		dispatch(updateResourceRequestSent());
+		return postRequest(request, 'exercise')
+			.then(checkStatus)
+			.then(parseJSON)
+			.then(result => {
+				if(result.success){
+					log('data retrieved');
+					log(result.data);
+				}else{
+					log('failed to retrieve data')
+				}
+				dispatch(resourceUpdated(result));
+			})
+			.catch(err => {
+				log(err);
+				dispatch(resourceUpdated(result));
+			})
+	}
+}
+

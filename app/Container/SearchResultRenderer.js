@@ -3,8 +3,9 @@
  */
 import { connect } from 'react-redux'
 import SearchResultTable from '../Component/Search/SearchResultTable'
-import {deleteMuscleGroup, deleteEquipment, deleteExercise, deleteMuscle, deleteEntryRequested, deleteRequestCanceled} from '../Actions/actions'
+import {deleteMuscleGroup, deleteEquipment, deleteExercise, deleteMuscle, deleteEntryRequested, deleteRequestCanceled, resourceToUpdateChosen} from '../Actions/actions'
 import * as models from '../model'
+import {browserHistory} from 'react-router'
 
 
 const mapStateToProps = (state) => {
@@ -39,6 +40,10 @@ const mapDispatchToProps = (dispatch) => {
 					dispatch(deleteMuscle(id));
 					break;
 			}
+		},
+		updateResource:(resource) =>{
+			dispatch(resourceToUpdateChosen(resource));
+			browserHistory.push('/dashboard/update');
 		}
 	}
 };
