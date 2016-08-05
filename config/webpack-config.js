@@ -30,6 +30,7 @@ module.exports = (option)=> {
 	if (option.app) {
 		appPlugin.push(
 			new HtmlWebpackPlugin({
+				title:'T.N.T 管理',
 				filename: 'index.html',
 				template: path.join(root_dir, 'template/index.html')
 			}),
@@ -39,6 +40,7 @@ module.exports = (option)=> {
 	} else if (option.login) {
 		loginPlugin.push(
 			new HtmlWebpackPlugin({
+				title:'T.N.T 登录',
 				filename: 'index.html',
 				template: path.join(root_dir, 'template/index.html')
 			}),
@@ -60,6 +62,7 @@ module.exports = (option)=> {
 			new webpack.optimize.DedupePlugin());
 		appPlugin.push(
 			new HtmlWebpackPlugin({
+				title:'T.N.T 管理',
 				filename: '../template/app.html',
 				template: path.join(root_dir, 'template/index.html')
 			}),
@@ -67,6 +70,7 @@ module.exports = (option)=> {
 			new ExtractTextPlugin("[hash].css"));
 		loginPlugin.push(
 			new HtmlWebpackPlugin({
+				title:'T.N.T 登录',
 				filename: '../template/login.html',
 				template: path.join(root_dir, 'template/index.html')
 			}),
