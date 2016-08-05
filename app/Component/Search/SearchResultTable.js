@@ -21,7 +21,7 @@ class SearchResultTable extends React.Component {
 
 	getNameForId(){
 		for(let data of this.props.results.data){
-			if(data['_id'] == this.props.deleteEntryState.id){
+			if(data['_id'] == this.props.deleteResourceState.id){
 				return data['name']
 			}
 		}
@@ -39,12 +39,12 @@ class SearchResultTable extends React.Component {
 							}
 						</tbody>
 					</table>
-			<Modal show={this.props.deleteEntryState.popup} onHide={this.props.cancelDeleteRequest}>
+			<Modal show={this.props.deleteResourceState.popup} onHide={this.props.cancelDeleteRequest}>
 				<Modal.Header>
 					<Modal.Title>确定删除 {this.getNameForId()}</Modal.Title>
 				</Modal.Header>
 				<Modal.Footer>
-					<Button onClick={()=>this.props.deleteEntry(this.props.deleteEntryState.id, this.props.results.type)}>
+					<Button onClick={()=>this.props.deleteResource(this.props.deleteResourceState.id, this.props.results.type)}>
 						确定
 					</Button>
 					<Button onClick={()=>this.props.cancelDeleteRequest()}>
@@ -56,15 +56,23 @@ class SearchResultTable extends React.Component {
 		);
 	}
 
+	componentDidUpdate(){
+		if(this.props.deleteResourceState.exceptionMessage != "" && this.props.deleteResourceState.exceptionMessage != ""){
+			alert('删除失败: '+this.props.deleteResourceState.exceptionMessage);
+			this.props.deleteResourceErrorAcknowledged();
+		}
+	}
+
 }
 
 SearchResultTable.propTypes = {
 	results: React.PropTypes.object,
-	deleteEntryState: React.PropTypes.object,
-	requestDelete: React.PropTypes.func,
-	deleteEntry: React.PropTypes.func,
-	cancelDeleteRequest: React.PropTypes.func,
-	updateResource: React.PropTypes.func
+	deleteResourceState: React.PropTypes.object,
+	requestDelete: React.PropTypes.func.isRequired,
+	deleteResource: React.PropTypes.func.isRequired,
+	cancelDeleteRequest: React.PropTypes.func.isRequired,
+	updateResource: React.PropTypes.func.isRequired,
+	deleteResourceErrorAcknowledged: React.PropTypes.func.isRequired
 };
 
 export default SearchResultTable

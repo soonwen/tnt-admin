@@ -76,16 +76,16 @@ export function acknowledgeCreateEntryResult(){
 }
 
 
-export function deleteEntryRequested(id){
-	return createSimpleAction(actionTypes.DELETE_ENTRY_REQUESTED, id);
+export function deleteResourceRequested(id){
+	return createSimpleAction(actionTypes.DELETE_RESOURCE_REQUESTED, id);
 }
 
-export function deleteEntryRequestSent(){
-	return createSimpleAction(actionTypes.DELETE_ENTRY_REQUEST_SENT, null);
+export function deleteResourceRequestSent(){
+	return createSimpleAction(actionTypes.DELETE_RESOURCE_REQUEST_SENT, null);
 }
 
-export function deleteEntryResultReceived(){
-	return createSimpleAction(actionTypes.ENTRY_DELETED, null);
+export function deleteResourceResultReceived(result){
+	return createSimpleAction(actionTypes.RESOURCE_DELETED, result);
 }
 
 export function deleteRequestCanceled(){
@@ -114,6 +114,10 @@ export function resourceToUpdateChosen(resource){
 
 export function updateResourceRequirementFilled(){
 	return createSimpleAction(actionTypes.UPDATE_RESOURCE_REQUIREMENT_FILLED, null);
+}
+
+export function deleteResourceErrorAcknowledged(){
+	return createSimpleAction(actionTypes.DELETE_RESOURCE_ERROR_ACKNOWLEDGED, null);
 }
 
 
@@ -375,7 +379,7 @@ export function createExercise(exercise){
 
 export function deleteMuscleGroup(id){
 	return dispatch =>{
-		dispatch(deleteEntryRequestSent());
+		dispatch(deleteResourceRequestSent());
 		return deleteRequest(id, 'muscle_group')
 				.then(checkStatus)
 				.then(parseJSON)
@@ -386,18 +390,18 @@ export function deleteMuscleGroup(id){
 					}else{
 						log('failed to retrieve data')
 					}
-					dispatch(deleteEntryResultReceived());
+					dispatch(deleteResourceResultReceived(result));
 				})
 				.catch(err => {
 					log(err);
-					dispatch(deleteEntryResultReceived());
+					dispatch(deleteResourceResultReceived(result));
 				})
 	}
 }
 
 export function deleteMuscle(id){
 	return dispatch =>{
-		dispatch(deleteEntryRequestSent());
+		dispatch(deleteResourceRequestSent());
 		return deleteRequest(id, 'muscle')
 				.then(checkStatus)
 				.then(parseJSON)
@@ -408,18 +412,18 @@ export function deleteMuscle(id){
 					}else{
 						log('failed to retrieve data')
 					}
-					dispatch(deleteEntryResultReceived());
+					dispatch(deleteResourceResultReceived(result));
 				})
 				.catch(err => {
 					log(err);
-					dispatch(deleteEntryResultReceived());
+					dispatch(deleteResourceResultReceived(result));
 				})
 	}
 }
 
 export function deleteEquipment(id){
 	return dispatch =>{
-		dispatch(deleteEntryRequestSent());
+		dispatch(deleteResourceRequestSent());
 		return deleteRequest(id, 'equipment')
 				.then(checkStatus)
 				.then(parseJSON)
@@ -430,18 +434,18 @@ export function deleteEquipment(id){
 					}else{
 						log('failed to retrieve data')
 					}
-					dispatch(deleteEntryResultReceived());
+					dispatch(deleteResourceResultReceived(result));
 				})
 				.catch(err => {
 					log(err);
-					dispatch(deleteEntryResultReceived());
+					dispatch(deleteResourceResultReceived(result));
 				})
 	}
 }
 
 export function deleteExercise(id){
 	return dispatch =>{
-		dispatch(deleteEntryRequestSent());
+		dispatch(deleteResourceRequestSent());
 		return deleteRequest(id, 'exercise')
 				.then(checkStatus)
 				.then(parseJSON)
@@ -452,11 +456,11 @@ export function deleteExercise(id){
 					}else{
 						log('failed to retrieve data')
 					}
-					dispatch(deleteEntryResultReceived());
+					dispatch(deleteResourceResultReceived(result));
 				})
 				.catch(err => {
 					log(err);
-					dispatch(deleteEntryResultReceived());
+					dispatch(deleteResourceResultReceived(result));
 				})
 	}
 }

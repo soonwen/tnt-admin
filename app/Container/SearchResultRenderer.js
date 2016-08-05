@@ -3,7 +3,7 @@
  */
 import { connect } from 'react-redux'
 import SearchResultTable from '../Component/Search/SearchResultTable'
-import {deleteMuscleGroup, deleteEquipment, deleteExercise, deleteMuscle, deleteEntryRequested, deleteRequestCanceled, resourceToUpdateChosen} from '../Actions/actions'
+import {deleteMuscleGroup, deleteEquipment, deleteExercise, deleteMuscle, deleteResourceRequested, deleteRequestCanceled, resourceToUpdateChosen, deleteResourceErrorAcknowledged} from '../Actions/actions'
 import * as models from '../model'
 import {browserHistory} from 'react-router'
 
@@ -11,7 +11,7 @@ import {browserHistory} from 'react-router'
 const mapStateToProps = (state) => {
 	return {
 		results: state.searchResult,
-		deleteEntryState: state.deleteEntryState
+		deleteResourceState: state.deleteResourceState
 	}
 };
 
@@ -22,10 +22,10 @@ const mapDispatchToProps = (dispatch) => {
 
 		},
 		requestDelete:(id) => {
-			dispatch(deleteEntryRequested(id))
+			dispatch(deleteResourceRequested(id))
 		},
 
-		deleteEntry: (id, type) =>{
+		deleteResource: (id, type) =>{
 			switch (type){
 				case models.EQUIPMENT:
 					dispatch(deleteEquipment(id));
@@ -44,6 +44,9 @@ const mapDispatchToProps = (dispatch) => {
 		updateResource:(resource) =>{
 			dispatch(resourceToUpdateChosen(resource));
 			browserHistory.push('/dashboard/update');
+		},
+		deleteResourceErrorAcknowledged:() =>{
+			dispatch(deleteResourceErrorAcknowledged());
 		}
 	}
 };

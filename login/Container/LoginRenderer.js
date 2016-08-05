@@ -15,7 +15,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onSubmit: (username, password) => {
+		onSubmit: (event, username, password) => {
+			event.preventDefault();
 			dispatch(login(username, password))
 		}
 	}

@@ -14,7 +14,7 @@ export default function renderResult(state = {headers:[], data:[], headerTexts:[
 	let result = {headers:[], data:[], headerTexts:[], type:""};
 	let type = action.type;
 	switch (type){
-		case actionTypes.ENTRY_DELETED:
+		case actionTypes.RESOURCE_DELETED:
 		case actionTypes.SELECTED_MODEL:
 			return result;
 		case actionTypes.MUSCLE_GROUP_SEARCH_RESULT_RECEIVED:

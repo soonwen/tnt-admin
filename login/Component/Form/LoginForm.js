@@ -31,7 +31,7 @@ class LoginForm extends React.Component {
 				</FormGroup>
 				<FormGroup controlId="password">
 					<Col>
-						<Button onClick={()=>this.props.onSubmit(document.getElementById("username").value, document.getElementById("password").value)}>
+						<Button type="submit" onClick={(event)=>this.props.onSubmit(event, document.getElementById("username").value, document.getElementById("password").value)}>
 							登录
 						</Button>
 					</Col>
