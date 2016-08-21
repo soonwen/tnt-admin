@@ -1,7 +1,7 @@
 /**
  * Created by robertzzy on 03/07/16.
  */
-
+"use strict";
 
 // MAIN DEPENDENCIES
 import path from 'path';

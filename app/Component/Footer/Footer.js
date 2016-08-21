@@ -15,10 +15,9 @@ export default class Footer extends React.Component{
 		return(
 			<footer className="mdl-mini-footer navbar-fixed-bottom">
 				<div className="mdl-mini-footer__left-section">
-					<div className="mdl-logo">Title</div>
+					<div className="mdl-logo">T.N.T管理</div>
 					<ul className="mdl-mini-footer__link-list">
-						<li><a href="#">Help</a></li>
-						<li><a href="#">Privacy & Terms</a></li>
+						<li>帮助</li>
 					</ul>
 				</div>
 			</footer>
